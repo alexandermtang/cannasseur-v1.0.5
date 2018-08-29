@@ -12,7 +12,7 @@ export default class App extends React.Component {
   async componentDidMount() {
     await Font.loadAsync({
       'PlayfairDisplay-Italic': require('./assets/fonts/PlayfairDisplay-Italic.ttf'),
-      PlayfairDisplay: require('./assets/fonts/PlayfairDisplay-Regular.ttf'),
+      'PlayfairDisplay-Regular': require('./assets/fonts/PlayfairDisplay-Regular.ttf'),
       WorkSans: require('./assets/fonts/WorkSans-Regular.ttf')
     });
 
@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
   logo: {
     width: 200,
     height: 200,
-    top: '40%'
+    top: '30%'
   },
   border: {
     borderColor: '#000',
@@ -84,13 +84,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#F4F3EF'
   },
   title: {
-    top: '40%',
+    top: '30%',
     fontSize: 40,
     fontFamily: 'PlayfairDisplay-Italic'
   },
   bottom: {
     height: '50%',
-    backgroundColor: '#F4F3EF'
+    // backgroundColor: '#F4F3EF'
   },
   inputs: {
     top: '10%',
@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
     width: '70%'
   },
   input: {
-    fontFamily: 'WorkSans',
+    fontFamily: 'PlayfairDisplay-Regular',
     marginBottom: 8,
     fontSize: 20,
     borderColor: '#000',
