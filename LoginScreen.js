@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image } from 'react-native';
+import * as firebase from 'firebase';
 
 class LoginScreen extends React.Component {
   state = {
@@ -7,9 +8,24 @@ class LoginScreen extends React.Component {
     password: ''
   };
 
-  onPress() {
-    console.log(this.state);
-    this.props.navigation.navigate('App');
+  async onPress() {
+    // this.props.navigation.navigate('App');
+
+    const { username, password } = this.state;
+    try {
+      await firebase
+        .auth()
+        .signInWithEmailAndPassword(username, password);
+
+      firebase.auth().onAuthStateChanged(user => {
+        if (user) {
+          this.props.navigation.navigate('App');
+          console.log(user);
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   render() {
@@ -39,7 +55,7 @@ class LoginScreen extends React.Component {
             <Text style={styles.loginText}>LOG IN</Text>
           </TouchableOpacity>
         </View>
-        <View style={styles.border} />
+        {/* <View style={styles.border} /> */}
       </View>
     );
   }
@@ -75,6 +91,7 @@ const styles = StyleSheet.create({
   bottom: {
     height: '50%',
     zIndex: 200,
+    backgroundColor: '#FFF'
   },
   inputs: {
     top: 16,
@@ -99,12 +116,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     left: '10%',
     borderRadius: 8,
-    top: 128,
+    top: 136
   },
   loginText: {
-    color: '#fff',
+    color: '#FFF',
     fontFamily: 'WorkSans',
-    fontSize: 16,
+    fontSize: 16
   }
 });
 
