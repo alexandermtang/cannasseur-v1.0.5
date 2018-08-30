@@ -1,11 +1,51 @@
 import React from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image } from 'react-native';
 import { Font } from 'expo';
-import Login from './Login';
+import { createSwitchNavigator, createStackNavigator } from 'react-navigation';
+
+import LoginScreen from './LoginScreen';
+import HomeScreen from './HomeScreen';
+
+const AuthStack = createStackNavigator(
+  {
+    Login: LoginScreen,
+  },
+  {
+    initialRouteName: 'Login',
+    headerMode: 'none',
+    navigationOptions: {
+      headerVisible: false
+    }
+  }
+);
+
+const AppStack = createStackNavigator(
+  {
+    Home: HomeScreen
+  },
+  {
+    initialRouteName: 'Home',
+    navigationOptions: {
+      headerStyle: {
+        backgroundColor: '#F4F3EF',
+      },
+      headerTintColor: '#000',
+      headerTitleStyle: {
+        fontFamily: 'WorkSans'
+      }
+    }
+  }
+);
+
+const SwitchNavigator = createSwitchNavigator({
+  App: AppStack,
+  Auth: AuthStack,
+}, {
+  initialRouteName: 'Auth'
+});
 
 class App extends React.Component {
   state = {
-    fontLoaded: false,
+    fontLoaded: false
   };
 
   async componentDidMount() {
@@ -19,7 +59,7 @@ class App extends React.Component {
   }
 
   render() {
-    return this.state.fontLoaded && <Login />;
+    return this.state.fontLoaded && <SwitchNavigator />;
   }
 }
 

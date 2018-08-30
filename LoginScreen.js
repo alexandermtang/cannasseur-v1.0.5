@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image } from 'react-native';
 
-class Login extends React.Component {
+class LoginScreen extends React.Component {
   state = {
     username: '',
     password: ''
@@ -9,6 +9,7 @@ class Login extends React.Component {
 
   onPress() {
     console.log(this.state);
+    this.props.navigation.navigate('App');
   }
 
   render() {
@@ -48,7 +49,7 @@ const styles = StyleSheet.create({
   logo: {
     width: 200,
     height: 200,
-    top: '30%'
+    bottom: 24
   },
   border: {
     borderColor: '#000',
@@ -63,10 +64,11 @@ const styles = StyleSheet.create({
   top: {
     height: '50%',
     alignItems: 'center',
+    justifyContent: 'flex-end',
     backgroundColor: '#F4F3EF'
   },
   title: {
-    top: '30%',
+    bottom: 16,
     fontSize: 40,
     fontFamily: 'PlayfairDisplay-Italic'
   },
@@ -75,7 +77,7 @@ const styles = StyleSheet.create({
     zIndex: 200,
   },
   inputs: {
-    top: '10%',
+    top: 16,
     left: '15%',
     position: 'absolute',
     width: '70%'
@@ -97,15 +99,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     left: '10%',
     borderRadius: 8,
-    top: '40%',
-    position: 'absolute',
+    top: 128,
   },
   loginText: {
     color: '#fff',
     fontFamily: 'WorkSans',
     fontSize: 16,
-    position: 'absolute',
   }
 });
 
-export default Login;
+export default LoginScreen;
