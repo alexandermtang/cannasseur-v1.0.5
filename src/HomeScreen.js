@@ -7,10 +7,11 @@ import {
   TextInput,
   TouchableOpacity,
   Image,
-  Dimensions
+  FlatList
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import * as firebase from 'firebase';
+import { ScrollView } from 'react-native-gesture-handler';
 
 class HomeScreen extends React.Component {
   static navigationOptions = {
@@ -32,29 +33,31 @@ class HomeScreen extends React.Component {
     // console.log(logs, logsArray);
   }
 
-  onPress() {
-    console.log(this.state);
-  }
-
   render() {
     console.log(this.state);
     return (
       <View>
         <View style={styles.searchInputContainer}>
           <Ionicons style={styles.searchIcon} name="ios-search" size={32} />
-          <TextInput style={styles.searchInput} placeholder={'Search'}/>
+          <TextInput style={styles.searchInput} placeholder={'Search'} />
         </View>
-        <Text>LOG BOOK</Text>
+        <ScrollView style={styles.logsContainer}>
+          <FlatList
+            data={this.state.logs}
+            renderItem={({ item }) => {
+              // console.log(item);
+              return <Text>{item.strain}</Text>;
+            }}
+          />
+        </ScrollView>
       </View>
     );
   }
 }
 
-const screenWidth = Dimensions.get('window').width
-
 const styles = StyleSheet.create({
   searchInputContainer: {
-    display: 'flex',
+    display: 'flex'
     // alignItems: 'center',
     // justifyContent: 'flex-start'
   },
@@ -73,6 +76,11 @@ const styles = StyleSheet.create({
     fontSize: 24,
     borderBottomWidth: 1,
     borderColor: '#e2e2e2'
+  },
+  logsContainer: {
+    height: '100%',
+    width: '100%'
+
   }
 });
 
