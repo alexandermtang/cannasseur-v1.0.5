@@ -6,6 +6,7 @@ import * as firebase from 'firebase';
 import AuthLoadingScreen from './src/AuthLoadingScreen';
 import LoginScreen from './src/LoginScreen';
 import HomeScreen from './src/HomeScreen';
+import MeScreen from './src/screens/MeScreen';
 
 const AuthStack = createStackNavigator(
   {
@@ -22,7 +23,8 @@ const AuthStack = createStackNavigator(
 
 const AppStack = createStackNavigator(
   {
-    Home: HomeScreen
+    Home: HomeScreen,
+    Me: MeScreen
   },
   {
     initialRouteName: 'Home',

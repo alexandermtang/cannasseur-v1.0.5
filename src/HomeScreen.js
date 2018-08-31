@@ -6,8 +6,7 @@ import {
   View,
   TextInput,
   TouchableOpacity,
-  Image,
-  FlatList,
+  FlatList
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import * as firebase from 'firebase';
@@ -16,8 +15,15 @@ import { ScrollView } from 'react-native-gesture-handler';
 import ListItem from './components/ListItem';
 
 class HomeScreen extends React.Component {
-  static navigationOptions = {
-    title: 'LOG BOOK'
+  static navigationOptions = ({ navigation }) => {
+    return {
+      title: 'LOG BOOK',
+      headerRight: (
+        <TouchableOpacity style={{ right: 16 }} onPress={() => navigation.push('Me')}>
+          <Ionicons name={'ios-contact-outline'} size={32} />
+        </TouchableOpacity>
+      )
+    };
   };
 
   state = {
@@ -33,13 +39,14 @@ class HomeScreen extends React.Component {
       .once('value');
     const logs = snapshot.val();
 
-    // TODO: sort by date with moment
-    this.setState({ logs: Object.keys(logs).map(date => ({ date, ...logs[date] })) });
+    this.setState({
+      logs: Object.keys(logs)
+        .reverse()
+        .map(date => ({ date, ...logs[date] }))
+    });
   }
 
   render() {
-    console.log(this.state);
-
     const strainsSet = new Set();
     this.state.logs.forEach(log => strainsSet.add(log.strain));
     const numStrains = strainsSet.size;
@@ -47,7 +54,7 @@ class HomeScreen extends React.Component {
     return (
       <View style={styles.container}>
         <View style={styles.searchInputContainer}>
-          <Ionicons style={styles.searchIcon} name="ios-search" size={32} />
+          <Ionicons style={styles.searchIcon} name={'ios-search'} size={32} />
           <TextInput style={styles.searchInput} placeholder={'Search'} />
         </View>
         <ScrollView style={styles.logsContainer}>
