@@ -7,11 +7,13 @@ import {
   TextInput,
   TouchableOpacity,
   Image,
-  FlatList
+  FlatList,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import * as firebase from 'firebase';
 import { ScrollView } from 'react-native-gesture-handler';
+
+import ListItem from './components/ListItem';
 
 class HomeScreen extends React.Component {
   static navigationOptions = {
@@ -27,16 +29,23 @@ class HomeScreen extends React.Component {
     const snapshot = await firebase
       .database()
       .ref(`logs/${userId}`)
+      .orderByKey()
       .once('value');
     const logs = snapshot.val();
+
+    // TODO: sort by date with moment
     this.setState({ logs: Object.keys(logs).map(date => ({ date, ...logs[date] })) });
-    // console.log(logs, logsArray);
   }
 
   render() {
     console.log(this.state);
+
+    const strainsSet = new Set();
+    this.state.logs.forEach(log => strainsSet.add(log.strain));
+    const numStrains = strainsSet.size;
+
     return (
-      <View>
+      <View style={styles.container}>
         <View style={styles.searchInputContainer}>
           <Ionicons style={styles.searchIcon} name="ios-search" size={32} />
           <TextInput style={styles.searchInput} placeholder={'Search'} />
@@ -44,20 +53,37 @@ class HomeScreen extends React.Component {
         <ScrollView style={styles.logsContainer}>
           <FlatList
             data={this.state.logs}
+            keyExtractor={(item, i) => i.toString()}
             renderItem={({ item }) => {
-              // console.log(item);
-              return <Text>{item.strain}</Text>;
+              return <ListItem item={item} onPress={() => console.log(item)} />;
             }}
           />
         </ScrollView>
+        <View style={styles.footerContainer}>
+          <TouchableOpacity style={styles.button}>
+            <Text style={styles.buttonText}>CREATE NEW LOG</Text>
+          </TouchableOpacity>
+          <View style={styles.strainsContainer}>
+            <Text style={styles.numStrains}>{numStrains}</Text>
+            <Text style={styles.strainsRecorded}>
+              STRAIN
+              {numStrains === 1 ? '' : 'S'} RECORDED
+            </Text>
+          </View>
+        </View>
       </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
+  container: {
+    display: 'flex',
+    flex: 1,
+    justifyContent: 'space-between'
+  },
   searchInputContainer: {
-    display: 'flex'
+    // display: 'flex'
     // alignItems: 'center',
     // justifyContent: 'flex-start'
   },
@@ -79,8 +105,44 @@ const styles = StyleSheet.create({
   },
   logsContainer: {
     height: '100%',
-    width: '100%'
-
+    // height: screenHeight - 48 - 80,
+    width: '100%',
+    backgroundColor: '#FFF'
+  },
+  footerContainer: {
+    backgroundColor: '#FFF',
+    width: '100%',
+    height: 164,
+    borderTopWidth: 1,
+    borderColor: '#e2e2e2',
+    paddingTop: 16,
+    paddingRight: 32,
+    paddingLeft: 32
+  },
+  button: {
+    width: '100%',
+    height: 48,
+    backgroundColor: '#000',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 8
+  },
+  buttonText: {
+    color: '#FFF',
+    fontFamily: 'WorkSans',
+    fontSize: 16
+  },
+  strainsContainer: {
+    alignItems: 'flex-end'
+  },
+  numStrains: {
+    fontFamily: 'PlayfairDisplay-Regular',
+    fontSize: 32
+  },
+  strainsRecorded: {
+    fontFamily: 'WorkSans',
+    fontSize: 16
   }
 });
 
