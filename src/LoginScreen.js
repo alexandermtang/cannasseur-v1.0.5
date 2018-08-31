@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image } from 'react-native';
+import { AsyncStorage, StyleSheet, Text, View, TextInput, TouchableOpacity, Image } from 'react-native';
 import * as firebase from 'firebase';
 
 class LoginScreen extends React.Component {
@@ -19,8 +19,11 @@ class LoginScreen extends React.Component {
 
       firebase.auth().onAuthStateChanged(user => {
         if (user) {
+          AsyncStorage.setItem('userId', user.uid);
           this.props.navigation.navigate('App');
           console.log(user);
+        } else {
+          AsyncStorage.setItem('userId', '');
         }
       });
     } catch (error) {
@@ -32,7 +35,7 @@ class LoginScreen extends React.Component {
     return (
       <View>
         <View style={styles.top}>
-          <Image source={require('./assets/cannabis.png')} style={styles.logo} />
+          <Image source={require('../assets/cannabis.png')} style={styles.logo} />
           <Text style={styles.title}>cannasseur</Text>
         </View>
         <View style={styles.bottom}>

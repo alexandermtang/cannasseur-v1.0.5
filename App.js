@@ -3,8 +3,9 @@ import { Font } from 'expo';
 import { createSwitchNavigator, createStackNavigator } from 'react-navigation';
 import * as firebase from 'firebase';
 
-import LoginScreen from './LoginScreen';
-import HomeScreen from './HomeScreen';
+import AuthLoadingScreen from './src/AuthLoadingScreen';
+import LoginScreen from './src/LoginScreen';
+import HomeScreen from './src/HomeScreen';
 
 const AuthStack = createStackNavigator(
   {
@@ -39,11 +40,12 @@ const AppStack = createStackNavigator(
 
 const SwitchNavigator = createSwitchNavigator(
   {
+    AuthLoading: AuthLoadingScreen,
     App: AppStack,
     Auth: AuthStack
   },
   {
-    initialRouteName: 'Auth'
+    initialRouteName: 'AuthLoading'
   }
 );
 
