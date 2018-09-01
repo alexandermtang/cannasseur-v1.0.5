@@ -7,6 +7,7 @@ import AuthLoadingScreen from './src/screens/AuthLoadingScreen';
 import LoginScreen from './src/screens/LoginScreen';
 import HomeScreen from './src/screens/HomeScreen';
 import MeScreen from './src/screens/MeScreen';
+import CreateNewLogScreen from './src/screens/CreateNewLogScreen';
 
 const AuthStack = createStackNavigator(
   {
@@ -24,7 +25,8 @@ const AuthStack = createStackNavigator(
 const AppStack = createStackNavigator(
   {
     Home: HomeScreen,
-    Me: MeScreen
+    Me: MeScreen,
+    CreateNewLog: CreateNewLogScreen
   },
   {
     initialRouteName: 'Home',

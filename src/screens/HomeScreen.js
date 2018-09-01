@@ -67,7 +67,10 @@ class HomeScreen extends React.Component {
           />
         </ScrollView>
         <View style={styles.footerContainer}>
-          <TouchableOpacity style={styles.button}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => this.props.navigation.navigate('CreateNewLog')}
+          >
             <Text style={styles.buttonText}>CREATE NEW LOG</Text>
           </TouchableOpacity>
           <View style={styles.strainsContainer}>
