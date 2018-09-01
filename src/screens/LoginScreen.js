@@ -32,7 +32,7 @@ class LoginScreen extends React.Component {
     return (
       <KeyboardAvoidingView behavior="padding" enabled>
         <View style={styles.top}>
-          <Image source={require('../assets/cannabis.png')} style={styles.logo} />
+          <Image source={require('../../assets/cannabis.png')} style={styles.logo} />
           <Text style={styles.title}>cannasseur</Text>
         </View>
         <View style={styles.bottom}>

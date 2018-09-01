@@ -12,7 +12,7 @@ import { Ionicons } from '@expo/vector-icons';
 import * as firebase from 'firebase';
 import { ScrollView } from 'react-native-gesture-handler';
 
-import ListItem from './components/ListItem';
+import ListItem from '../components/ListItem';
 
 class HomeScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {

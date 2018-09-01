@@ -3,9 +3,9 @@ import { Font } from 'expo';
 import { createSwitchNavigator, createStackNavigator } from 'react-navigation';
 import * as firebase from 'firebase';
 
-import AuthLoadingScreen from './src/AuthLoadingScreen';
-import LoginScreen from './src/LoginScreen';
-import HomeScreen from './src/HomeScreen';
+import AuthLoadingScreen from './src/screens/AuthLoadingScreen';
+import LoginScreen from './src/screens/LoginScreen';
+import HomeScreen from './src/screens/HomeScreen';
 import MeScreen from './src/screens/MeScreen';
 
 const AuthStack = createStackNavigator(
