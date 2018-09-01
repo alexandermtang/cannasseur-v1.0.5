@@ -97,29 +97,28 @@ const styles = StyleSheet.create({
   searchIcon: {
     position: 'absolute',
     zIndex: 100,
-    top: 8,
-    left: 8
+    top: 12,
+    left: 16
   },
   searchInput: {
-    height: 48,
+    height: 56,
     fontFamily: 'PlayfairDisplay-Regular',
     backgroundColor: '#FFF',
     padding: 8,
-    paddingLeft: 40,
+    paddingLeft: 56,
     fontSize: 24,
     borderBottomWidth: 1,
     borderColor: '#e2e2e2'
   },
   logsContainer: {
     height: '100%',
-    // height: screenHeight - 48 - 80,
     width: '100%',
     backgroundColor: '#FFF'
   },
   footerContainer: {
     backgroundColor: '#FFF',
     width: '100%',
-    height: 164,
+    height: 148,
     borderTopWidth: 1,
     borderColor: '#e2e2e2',
     paddingTop: 16,

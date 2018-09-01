@@ -14,7 +14,7 @@ const ListItem = ({ item, onPress }) => {
 
 const styles = StyleSheet.create({
   container: {
-    height: 48,
+    height: 56,
     display: 'flex',
     justifyContent: 'center',
     paddingLeft: 16,
