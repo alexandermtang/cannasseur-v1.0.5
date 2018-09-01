@@ -1,5 +1,5 @@
 import React from 'react';
-import { AsyncStorage, StyleSheet, Text, View, TextInput, TouchableOpacity, Image } from 'react-native';
+import { AsyncStorage, StyleSheet, Text, View, TextInput, TouchableOpacity, Image, KeyboardAvoidingView } from 'react-native';
 import * as firebase from 'firebase';
 
 class LoginScreen extends React.Component {
@@ -9,8 +9,6 @@ class LoginScreen extends React.Component {
   };
 
   async onPress() {
-    // this.props.navigation.navigate('App');
-
     const { username, password } = this.state;
     try {
       await firebase
@@ -21,7 +19,6 @@ class LoginScreen extends React.Component {
         if (user) {
           AsyncStorage.setItem('userId', user.uid);
           this.props.navigation.navigate('App');
-          console.log(user);
         } else {
           AsyncStorage.setItem('userId', '');
         }
@@ -33,7 +30,7 @@ class LoginScreen extends React.Component {
 
   render() {
     return (
-      <View>
+      <KeyboardAvoidingView behavior="padding" enabled>
         <View style={styles.top}>
           <Image source={require('../assets/cannabis.png')} style={styles.logo} />
           <Text style={styles.title}>cannasseur</Text>
@@ -59,16 +56,16 @@ class LoginScreen extends React.Component {
           </TouchableOpacity>
         </View>
         {/* <View style={styles.border} /> */}
-      </View>
+      </KeyboardAvoidingView>
     );
   }
 }
 
 const styles = StyleSheet.create({
   logo: {
-    width: 200,
-    height: 200,
-    bottom: 24
+    width: 150,
+    height: 150,
+    bottom: 16
   },
   border: {
     borderColor: '#000',
