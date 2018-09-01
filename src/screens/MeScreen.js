@@ -33,14 +33,21 @@ class MeScreen extends React.Component {
 
   render() {
     return (
-      <TouchableOpacity style={styles.logoutButton} onPress={() => this.logout()}>
-        <Text style={styles.logoutText}>LOG OUT</Text>
-      </TouchableOpacity>
+      <View style={styles.container}>
+        <TouchableOpacity style={styles.logoutButton} onPress={() => this.logout()}>
+          <Text style={styles.logoutText}>LOG OUT</Text>
+        </TouchableOpacity>
+      </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
+  container: {
+    backgroundColor: '#FFF',
+    width: '100%',
+    height: '100%'
+  },
   logoutButton: {
     top: '80%',
     justifyContent: 'center',
