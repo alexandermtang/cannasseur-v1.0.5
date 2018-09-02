@@ -20,6 +20,7 @@ const CircleRating = props => (
 
 class CreateNewLogScreen extends React.Component {
   state = {
+    strain: '',
     happy: 0,
     creative: 0,
     active: 0,
@@ -49,20 +50,19 @@ class CreateNewLogScreen extends React.Component {
     const { tags } = this.state;
     const newTags = tags.indexOf(tag) === -1 ? [...tags, tag] : tags.filter(t => t !== tag);
     this.setState({ tags: newTags });
-
-    // if (this.state.tags.indexOf(tag) === -1) {
-    //   this.setState({ tags: [...this.state.tags, tag] });
-    // } else {
-    //   this.setState({ tags: this.state.tags.filter(t => t !== tag) });
-    // }
   }
 
   render() {
+    console.log(this.state);
     return (
       <View style={styles.container}>
         <View style={styles.nameOfStrainContainer}>
           <Text style={styles.nameOfStrain}>NAME OF STRAIN</Text>
-          <TextInput style={styles.strainInput} placeholder={'Pineapple Express'} />
+          <TextInput
+            style={styles.strainInput}
+            placeholder={'Pineapple Express'}
+            onChangeText={strain => this.setState({ strain })}
+          />
         </View>
         <View style={styles.moodChartContainer}>
           <View style={styles.left} />
