@@ -1,6 +1,7 @@
 import React from 'react';
 import {
   AsyncStorage,
+  ActivityIndicator,
   StyleSheet,
   Text,
   View,
@@ -27,7 +28,8 @@ class HomeScreen extends React.Component {
   };
 
   state = {
-    logs: []
+    logs: [],
+    isLoading: true
   };
 
   async componentDidMount() {
@@ -42,7 +44,8 @@ class HomeScreen extends React.Component {
     this.setState({
       logs: Object.keys(logs)
         .reverse()
-        .map(date => ({ date, ...logs[date] }))
+        .map(date => ({ date, ...logs[date] })),
+      isLoading: false
     });
   }
 
@@ -57,15 +60,19 @@ class HomeScreen extends React.Component {
           <Ionicons style={styles.searchIcon} name={'ios-search'} size={32} />
           <TextInput style={styles.searchInput} placeholder={'Search'} />
         </View>
-        <ScrollView style={styles.logsContainer}>
-          <FlatList
-            data={this.state.logs}
-            keyExtractor={(item, i) => i.toString()}
-            renderItem={({ item }) => {
-              return <ListItem item={item} onPress={() => console.log(item)} />;
-            }}
-          />
-        </ScrollView>
+        {this.state.isLoading ? (
+          <ActivityIndicator size="large" color="#9b9b9b" />
+        ) : (
+          <ScrollView style={styles.logsContainer}>
+            <FlatList
+              data={this.state.logs}
+              keyExtractor={(item, i) => i.toString()}
+              renderItem={({ item }) => {
+                return <ListItem item={item} onPress={() => console.log(item)} />;
+              }}
+            />
+          </ScrollView>
+        )}
         <View style={styles.footerContainer}>
           <TouchableOpacity
             style={styles.button}
@@ -90,7 +97,8 @@ const styles = StyleSheet.create({
   container: {
     display: 'flex',
     flex: 1,
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    backgroundColor: '#FFF'
   },
   searchInputContainer: {
     // display: 'flex'
@@ -111,7 +119,7 @@ const styles = StyleSheet.create({
     paddingLeft: 56,
     fontSize: 24,
     borderBottomWidth: 1,
-    borderColor: '#e2e2e2'
+    borderColor: '#d8d8d8'
   },
   logsContainer: {
     height: '100%',
@@ -123,7 +131,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 148,
     borderTopWidth: 1,
-    borderColor: '#e2e2e2',
+    borderColor: '#d8d8d8',
     paddingTop: 16,
     paddingRight: 32,
     paddingLeft: 32
