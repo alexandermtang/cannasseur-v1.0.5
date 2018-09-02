@@ -7,7 +7,7 @@ const ListItem = ({ item, onPress }) => {
 
   return (
     <TouchableOpacity style={styles.container} onPress={onPress}>
-      <Text style={styles.text}>{date}      {item.strain}</Text>
+      <Text style={styles.text}>{`${date}\t${item.strain}`}</Text>
     </TouchableOpacity>
   );
 };
@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingLeft: 16,
     backgroundColor: '#FFF',
-    borderColor: '#e2e2e2',
+    borderColor: '#d8d8d8',
     borderBottomWidth: 1
   },
   text: {
