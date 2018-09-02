@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFF'
   },
   footerContainer: {
-    backgroundColor: '#FFF',
+    backgroundColor: '#F4F3EF',
     width: '100%',
     height: 148,
     borderTopWidth: 1,

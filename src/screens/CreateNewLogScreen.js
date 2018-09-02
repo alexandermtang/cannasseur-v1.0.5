@@ -15,7 +15,6 @@ const CircleRating = props => (
     fullStar={'circle'}
     starStyle={{ fontSize: 32 }}
     containerStyle={{ padding: 8, height: 48 }}
-    // selectedStar={rating => props.onStarRatingPress(rating)}
   />
 );
 
@@ -26,7 +25,8 @@ class CreateNewLogScreen extends React.Component {
     active: 0,
     relaxed: 0,
     hungry: 0,
-    sleepy: 0
+    sleepy: 0,
+    tags: []
   };
 
   static navigationOptions = ({ navigation }) => {
@@ -36,18 +36,28 @@ class CreateNewLogScreen extends React.Component {
         <TouchableOpacity style={{ left: 16 }} onPress={() => navigation.goBack()}>
           <Ionicons name={'ios-arrow-dropleft'} size={32} />
         </TouchableOpacity>
+      ),
+      headerRight: (
+        <TouchableOpacity style={{ right: 16 }} onPress={() => null}>
+          <Ionicons name={'ios-arrow-dropright'} size={32} />
+        </TouchableOpacity>
       )
     };
   };
 
-  onStarRatingPress(rating) {
-    this.setState({
-      starCount: rating
-    });
+  toggleTag(tag) {
+    const { tags } = this.state;
+    const newTags = tags.indexOf(tag) === -1 ? [...tags, tag] : tags.filter(t => t !== tag);
+    this.setState({ tags: newTags });
+
+    // if (this.state.tags.indexOf(tag) === -1) {
+    //   this.setState({ tags: [...this.state.tags, tag] });
+    // } else {
+    //   this.setState({ tags: this.state.tags.filter(t => t !== tag) });
+    // }
   }
 
   render() {
-    // return <Text>CREATE NEW LOG</Text>;
     return (
       <View style={styles.container}>
         <View style={styles.nameOfStrainContainer}>
@@ -97,6 +107,43 @@ class CreateNewLogScreen extends React.Component {
           </View>
         </View>
         <Text style={styles.label}>GOOD FOR</Text>
+        <View style={styles.tagsContainer}>
+          {[
+            'Ideas',
+            'Laughing',
+            'Movies',
+            'Socializing',
+            'Sleep',
+            'Sex',
+            'Edibles',
+            'Food',
+            'Anxiety'
+          ].map((tag, i) => {
+            return (
+              <TouchableOpacity
+                key={i}
+                style={[
+                  styles.tagButton,
+                  this.state.tags.indexOf(tag) === -1
+                    ? styles.tagButtonUnhighlighted
+                    : styles.tagButtonHighlighted
+                ]}
+                onPress={() => this.toggleTag(tag)}
+              >
+                <Text
+                  style={[
+                    styles.tag,
+                    this.state.tags.indexOf(tag) === -1
+                      ? styles.tagUnhighlighted
+                      : styles.tagHighlighted
+                  ]}
+                >
+                  {tag}
+                </Text>
+              </TouchableOpacity>
+            );
+          })}
+        </View>
       </View>
     );
   }
@@ -104,15 +151,11 @@ class CreateNewLogScreen extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 16
+    padding: 16,
+    backgroundColor: '#fff',
+    height: '100%'
   },
-  nameOfStrainContainer: {
-    // padding: 16
-    // paddingTop: 16,
-    // paddingBottom: 16,
-    // paddingLeft: 32,
-    // paddingRight: 32
-  },
+  nameOfStrainContainer: {},
   strainInput: {
     paddingTop: 8,
     paddingBottom: 8,
@@ -139,10 +182,11 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     marginBottom: 16
-    // padding: 16
   },
   left: {
     width: '50%'
+    // paddingRight: 32,
+    // alignItems:'flex-end'
   },
   right: {
     width: '50%'
@@ -151,15 +195,48 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: 'WorkSans'
   },
-  // center: {
-  //   justifyContent: 'center',
-  //   // alignItems: 'center'
-  // },
   rating: {
     fontSize: 24,
     fontFamily: 'PlayfairDisplay-Regular',
     lineHeight: 48,
     color: '#9B9B9B'
+  },
+  tagsContainer: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginTop: 16,
+    width: '100%',
+    height: '100%'
+  },
+  tagButton: {
+    padding: 8,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderRadius: 8,
+    margin: 8,
+    height: 48,
+    minWidth: 80
+  },
+
+  tagButtonUnhighlighted: {
+    borderColor: '#9b9b9b'
+  },
+  tagButtonHighlighted: {
+    backgroundColor: '#000',
+    borderColor: '#000'
+  },
+  tag: {
+    fontSize: 16,
+    fontFamily: 'WorkSans'
+  },
+  tagUnhighlighted: {
+    color: '#9b9b9b'
+  },
+  tagHighlighted: {
+    color: '#fff'
   }
 });
 
