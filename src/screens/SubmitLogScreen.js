@@ -26,7 +26,7 @@ class SubmitLogScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.finalRating}>Final Rating</Text>
+        <Text style={styles.label}>Final Rating</Text>
         <View style={styles.starRatingContainer}>
           <StarRating
             disabled={false}
@@ -37,15 +37,18 @@ class SubmitLogScreen extends React.Component {
             selectedStar={rating => this.setState({ finalRating: rating })}
           />
         </View>
-        <Text style={styles.finalRating}>Any Other Notes?</Text>
+        <Text style={styles.label}>Any Other Notes?</Text>
+        <Text style={styles.sublabel}>(Optional)</Text>
         <TextInput
           multiline={true}
-          numberOfLines={4}
+          numberOfLines={3}
           placeholder={'This strain makes me feel on top of the world!'}
-          editable={true}
-          style={{ borderWidth: 1 }}
+          // editable={true}
+          style={styles.notesInput}
         />
-        <BlackButton onPress={() => this.props.navigation.replace('Home')} text={'SUBMIT'} />
+        <View style={styles.buttonContainer}>
+          <BlackButton onPress={() => this.props.navigation.navigate('Home')} text={'SUBMIT'} />
+        </View>
       </View>
     );
   }
@@ -57,12 +60,18 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     height: '100%'
   },
-  finalRating: {
+  label: {
     fontSize: 24,
+    fontFamily: 'PlayfairDisplay-Regular'
+  },
+  sublabel: {
+    marginTop: 8,
+    fontSize: 16,
     fontFamily: 'PlayfairDisplay-Regular'
   },
   starRatingContainer: {
     marginTop: 24,
+    marginBottom: 24,
     paddingBottom: 24,
     borderBottomWidth: 1,
     borderColor: '#d8d8d8'
@@ -80,6 +89,20 @@ const styles = StyleSheet.create({
     color: '#FFF',
     fontFamily: 'WorkSans',
     fontSize: 16
+  },
+  notesInput: {
+    borderWidth: 1,
+    marginTop: 24,
+    marginBottom: 24,
+    borderRadius: 8,
+    height: 72,
+    padding: 16,
+    fontSize: 16,
+    fontFamily: 'PlayfairDisplay-Regular'
+  },
+  buttonContainer: {
+    paddingLeft: 16,
+    paddingRight: 16
   }
 });
 
