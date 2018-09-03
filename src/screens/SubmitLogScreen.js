@@ -21,28 +21,41 @@ class SubmitLogScreen extends React.Component {
 
   state = {
     finalRating: 0,
-    notes: ''
+    notes: '',
+    hasError: false
   };
 
   async onSubmit() {
-    const userId = await AsyncStorage.getItem('userId');
-    const log = this.props.navigation.getParam('log', {});
-    const { finalRating, notes } = this.state;
-    await firebase
-      .database()
-      .ref(`logs/${userId}/${moment().format()}`)
-      .set({
-        ...log,
-        finalRating,
-        notes
-      });
-    this.props.navigation.navigate('Home', { forceUpdate: true });
+    if (this.isComplete()) {
+      const userId = await AsyncStorage.getItem('userId');
+      const log = this.props.navigation.getParam('log', {});
+      const { finalRating, notes } = this.state;
+      await firebase
+        .database()
+        .ref(`logs/${userId}/${moment().format()}`)
+        .set({
+          ...log,
+          finalRating,
+          notes
+        });
+      this.setState({ hasError: false });
+      this.props.navigation.navigate('Home', { forceUpdate: true });
+    } else {
+      this.setState({ hasError: true });
+    }
+  }
+
+  isComplete() {
+    return this.state.finalRating !== 0;
   }
 
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.label}>Final Rating</Text>
+        <Text style={[styles.label, this.state.hasError ? styles.error : null]}>
+          Final Rating
+          {this.state.hasError ? '*' : ''}
+        </Text>
         <View style={styles.starRatingContainer}>
           <StarRating
             disabled={false}
@@ -78,6 +91,9 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 24,
     fontFamily: 'PlayfairDisplay-Regular'
+  },
+  error: {
+    color: '#f00'
   },
   sublabel: {
     marginTop: 8,

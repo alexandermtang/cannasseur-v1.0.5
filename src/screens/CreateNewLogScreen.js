@@ -201,7 +201,7 @@ const styles = StyleSheet.create({
     fontFamily: 'WorkSans'
   },
   error: {
-    color: 'red',
+    color: '#f00',
     // fontFamily: 'WorkSans-Bold'
   },
   rating: {
