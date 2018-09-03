@@ -26,7 +26,8 @@ class CreateNewLogScreen extends React.Component {
     relaxed: 0,
     hungry: 0,
     sleepy: 0,
-    tags: []
+    tags: [],
+    hasErrors: false
   };
 
   toggleTag(tag) {
@@ -35,12 +36,19 @@ class CreateNewLogScreen extends React.Component {
     this.setState({ tags: newTags });
   }
 
+  isComplete() {
+    return this.state.strain !== '';
+  }
+
   render() {
     console.log(this.state);
     return (
       <ScrollView style={styles.container}>
         <View style={styles.nameOfStrainContainer}>
-          <Text style={styles.nameOfStrain}>NAME OF STRAIN</Text>
+          <Text style={[styles.nameOfStrain, this.state.hasErrors ? styles.error : null]}>
+            NAME OF STRAIN
+            {this.state.hasErrors ? '*' : ''}
+          </Text>
           <TextInput
             style={styles.strainInput}
             placeholder={'Pineapple Express'}
@@ -132,13 +140,12 @@ class CreateNewLogScreen extends React.Component {
             text={'NEXT'}
             onPress={() => {
               console.log('NEXT');
-              // if (this.isComplete()) {
-              this.props.navigation.navigate('SubmitLog', {
-                log: this.state
-              });
-              // } else {
-              // this.setState({errors: })
-              // }
+              if (this.isComplete()) {
+                this.props.navigation.navigate('SubmitLog', { log: this.state });
+                this.setState({ hasErrors: false });
+              } else {
+                this.setState({ hasErrors: true });
+              }
             }}
           />
         </View>
@@ -192,6 +199,10 @@ const styles = StyleSheet.create({
   nameOfStrain: {
     fontSize: 16,
     fontFamily: 'WorkSans'
+  },
+  error: {
+    color: 'red',
+    // fontFamily: 'WorkSans-Bold'
   },
   rating: {
     fontSize: 24,

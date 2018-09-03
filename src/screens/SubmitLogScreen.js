@@ -40,10 +40,6 @@ class SubmitLogScreen extends React.Component {
   }
 
   render() {
-    const log = this.props.navigation.getParam('log', {});
-    console.log('params', log);
-    // console.log('params', this.props.navigation.state.params);
-
     return (
       <View style={styles.container}>
         <Text style={styles.label}>Final Rating</Text>

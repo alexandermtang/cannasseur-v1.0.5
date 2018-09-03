@@ -77,7 +77,8 @@ class App extends React.Component {
     await Font.loadAsync({
       'PlayfairDisplay-Italic': require('./assets/fonts/PlayfairDisplay-Italic.ttf'),
       'PlayfairDisplay-Regular': require('./assets/fonts/PlayfairDisplay-Regular.ttf'),
-      WorkSans: require('./assets/fonts/WorkSans-Regular.ttf')
+      WorkSans: require('./assets/fonts/WorkSans-Regular.ttf'),
+      'WorkSans-Bold': require('./assets/fonts/WorkSans-Bold.ttf')
     });
 
     this.setState({ fontLoaded: true });

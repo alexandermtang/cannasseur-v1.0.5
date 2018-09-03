@@ -27,7 +27,6 @@ class MeScreen extends React.Component {
   };
 
   async logout() {
-    console.log('logging out');
     await AsyncStorage.clear();
     await firebase.auth().signOut();
     this.props.navigation.navigate('AuthLoading');
