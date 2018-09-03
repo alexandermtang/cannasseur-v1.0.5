@@ -14,6 +14,7 @@ import * as firebase from 'firebase';
 import { ScrollView } from 'react-native-gesture-handler';
 
 import ListItem from '../components/ListItem';
+import BlackButton from '../components/BlackButton';
 
 class HomeScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
@@ -74,12 +75,10 @@ class HomeScreen extends React.Component {
           </ScrollView>
         )}
         <View style={styles.footerContainer}>
-          <TouchableOpacity
-            style={styles.button}
+          <BlackButton
             onPress={() => this.props.navigation.navigate('CreateNewLog')}
-          >
-            <Text style={styles.buttonText}>CREATE NEW LOG</Text>
-          </TouchableOpacity>
+            text={'CREATE NEW LOG'}
+          />
           <View style={styles.strainsContainer}>
             <Text style={styles.numStrains}>{numStrains}</Text>
             <Text style={styles.strainsRecorded}>
@@ -135,20 +134,6 @@ const styles = StyleSheet.create({
     paddingTop: 16,
     paddingRight: 32,
     paddingLeft: 32
-  },
-  button: {
-    width: '100%',
-    height: 48,
-    backgroundColor: '#000',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 8
-  },
-  buttonText: {
-    color: '#FFF',
-    fontFamily: 'WorkSans',
-    fontSize: 16
   },
   strainsContainer: {
     alignItems: 'flex-end'

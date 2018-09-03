@@ -3,33 +3,9 @@ import { Text, TouchableOpacity, View, TextInput, StyleSheet } from 'react-nativ
 import moment from 'moment';
 import { Ionicons } from '@expo/vector-icons';
 
-import StarRating from 'react-native-star-rating';
-
-const CircleRating = props => (
-  <StarRating
-    {...props}
-    disabled={false}
-    maxStars={3}
-    emptyStar={'circle'}
-    emptyStarColor={'#d8d8d8'}
-    fullStar={'circle'}
-    starStyle={{ fontSize: 32 }}
-    containerStyle={{ padding: 8, height: 48 }}
-  />
-);
+import CircleRating from '../components/CircleRating';
 
 class CreateNewLogScreen extends React.Component {
-  state = {
-    strain: '',
-    happy: 0,
-    creative: 0,
-    active: 0,
-    relaxed: 0,
-    hungry: 0,
-    sleepy: 0,
-    tags: []
-  };
-
   static navigationOptions = ({ navigation }) => {
     return {
       title: moment().format('MM/DD'),
@@ -39,11 +15,22 @@ class CreateNewLogScreen extends React.Component {
         </TouchableOpacity>
       ),
       headerRight: (
-        <TouchableOpacity style={{ right: 16 }} onPress={() => null}>
+        <TouchableOpacity style={{ right: 16 }} onPress={() => navigation.navigate('SubmitLog')}>
           <Ionicons name={'ios-arrow-dropright'} size={32} />
         </TouchableOpacity>
       )
     };
+  };
+
+  state = {
+    strain: '',
+    happy: 0,
+    creative: 0,
+    active: 0,
+    relaxed: 0,
+    hungry: 0,
+    sleepy: 0,
+    tags: []
   };
 
   toggleTag(tag) {
@@ -220,7 +207,6 @@ const styles = StyleSheet.create({
     height: 48,
     minWidth: 80
   },
-
   tagButtonUnhighlighted: {
     borderColor: '#9b9b9b'
   },
