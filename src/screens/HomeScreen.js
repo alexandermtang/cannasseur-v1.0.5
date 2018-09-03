@@ -82,7 +82,7 @@ class HomeScreen extends React.Component {
                 <ListItem
                   item={item}
                   onPress={() => {
-                    console.log(item);
+                    this.props.navigation.push('ViewLog', { log: item });
                   }}
                 />
               )}

@@ -41,7 +41,6 @@ class CreateNewLogScreen extends React.Component {
   }
 
   render() {
-    console.log(this.state);
     return (
       <ScrollView style={styles.container}>
         <View style={styles.nameOfStrainContainer}>
@@ -190,8 +189,6 @@ const styles = StyleSheet.create({
   },
   left: {
     width: '50%'
-    // paddingRight: 32,
-    // alignItems:'flex-end'
   },
   right: {
     width: '50%'
@@ -201,7 +198,7 @@ const styles = StyleSheet.create({
     fontFamily: 'WorkSans'
   },
   error: {
-    color: '#f00',
+    color: '#f00'
     // fontFamily: 'WorkSans-Bold'
   },
   rating: {
