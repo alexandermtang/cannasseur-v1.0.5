@@ -12,6 +12,8 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import * as firebase from 'firebase';
 
+import BlackButton from '../components/BlackButton';
+
 class MeScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return {
@@ -34,9 +36,7 @@ class MeScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <TouchableOpacity style={styles.logoutButton} onPress={() => this.logout()}>
-          <Text style={styles.logoutText}>LOG OUT</Text>
-        </TouchableOpacity>
+        <BlackButton onPress={() => this.logout()} text={'LOG OUT'} />
       </View>
     );
   }
@@ -46,23 +46,10 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: '#FFF',
     width: '100%',
-    height: '100%'
+    height: '100%',
+    padding: 32,
+    paddingTop: 560
   },
-  logoutButton: {
-    top: '80%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: 48,
-    width: '80%',
-    backgroundColor: '#000',
-    borderRadius: 8,
-    left: '10%'
-  },
-  logoutText: {
-    color: '#FFF',
-    fontFamily: 'WorkSans',
-    fontSize: 16
-  }
 });
 
 export default MeScreen;
