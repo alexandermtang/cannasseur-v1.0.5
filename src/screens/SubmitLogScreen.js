@@ -36,7 +36,7 @@ class SubmitLogScreen extends React.Component {
         finalRating,
         notes
       });
-    this.props.navigation.navigate('Home');
+    this.props.navigation.navigate('Home', { forceUpdate: true });
   }
 
   render() {

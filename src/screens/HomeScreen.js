@@ -33,7 +33,7 @@ class HomeScreen extends React.Component {
     isLoading: true
   };
 
-  async componentDidMount() {
+  async getLogs() {
     const userId = await AsyncStorage.getItem('userId');
     const snapshot = await firebase
       .database()
@@ -48,6 +48,16 @@ class HomeScreen extends React.Component {
         .map(date => ({ date, ...logs[date] })),
       isLoading: false
     });
+  }
+
+  async componentDidMount() {
+    this.getLogs();
+  }
+
+  async componentWillReceiveProps(nextProps) {
+    if (nextProps.navigation.state.params.forceUpdate) {
+      this.getLogs();
+    }
   }
 
   render() {
@@ -68,9 +78,14 @@ class HomeScreen extends React.Component {
             <FlatList
               data={this.state.logs}
               keyExtractor={(item, i) => i.toString()}
-              renderItem={({ item }) => {
-                return <ListItem item={item} onPress={() => console.log(item)} />;
-              }}
+              renderItem={({ item }) => (
+                <ListItem
+                  item={item}
+                  onPress={() => {
+                    console.log(item);
+                  }}
+                />
+              )}
             />
           </ScrollView>
         )}
