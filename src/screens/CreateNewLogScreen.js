@@ -1,9 +1,10 @@
 import React from 'react';
-import { Text, TouchableOpacity, View, TextInput, StyleSheet } from 'react-native';
+import { Text, TouchableOpacity, View, TextInput, StyleSheet, ScrollView } from 'react-native';
 import moment from 'moment';
 import { Ionicons } from '@expo/vector-icons';
 
 import CircleRating from '../components/CircleRating';
+import BlackButton from '../components/BlackButton';
 
 class CreateNewLogScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
@@ -12,11 +13,6 @@ class CreateNewLogScreen extends React.Component {
       headerLeft: (
         <TouchableOpacity style={{ left: 16 }} onPress={() => navigation.goBack()}>
           <Ionicons name={'ios-arrow-dropleft'} size={32} />
-        </TouchableOpacity>
-      ),
-      headerRight: (
-        <TouchableOpacity style={{ right: 16 }} onPress={() => navigation.navigate('SubmitLog')}>
-          <Ionicons name={'ios-arrow-dropright'} size={32} />
         </TouchableOpacity>
       )
     };
@@ -42,7 +38,7 @@ class CreateNewLogScreen extends React.Component {
   render() {
     console.log(this.state);
     return (
-      <View style={styles.container}>
+      <ScrollView style={styles.container}>
         <View style={styles.nameOfStrainContainer}>
           <Text style={styles.nameOfStrain}>NAME OF STRAIN</Text>
           <TextInput
@@ -131,7 +127,22 @@ class CreateNewLogScreen extends React.Component {
             );
           })}
         </View>
-      </View>
+        <View style={styles.nextButtonContainer}>
+          <BlackButton
+            text={'NEXT'}
+            onPress={() => {
+              console.log('NEXT');
+              // if (this.isComplete()) {
+              this.props.navigation.navigate('SubmitLog', {
+                log: this.state
+              });
+              // } else {
+              // this.setState({errors: })
+              // }
+            }}
+          />
+        </View>
+      </ScrollView>
     );
   }
 }
@@ -194,8 +205,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     marginTop: 16,
-    width: '100%',
-    height: '100%'
+    width: '100%'
   },
   tagButton: {
     padding: 8,
@@ -203,7 +213,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderWidth: 1,
     borderRadius: 8,
-    margin: 8,
+    margin: 4,
     height: 48,
     minWidth: 80
   },
@@ -223,6 +233,11 @@ const styles = StyleSheet.create({
   },
   tagHighlighted: {
     color: '#fff'
+  },
+  nextButtonContainer: {
+    marginTop: 8,
+    paddingRight: 16,
+    paddingLeft: 16
   }
 });
 

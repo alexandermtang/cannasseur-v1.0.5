@@ -1,8 +1,9 @@
 import React from 'react';
-import { Text, TouchableOpacity, View, TextInput, StyleSheet } from 'react-native';
+import { Text, TouchableOpacity, View, TextInput, StyleSheet, AsyncStorage } from 'react-native';
 import moment from 'moment';
 import { Ionicons } from '@expo/vector-icons';
 import StarRating from 'react-native-star-rating';
+import * as firebase from 'firebase';
 
 import BlackButton from '../components/BlackButton';
 
@@ -23,7 +24,26 @@ class SubmitLogScreen extends React.Component {
     notes: ''
   };
 
+  async onSubmit() {
+    const userId = await AsyncStorage.getItem('userId');
+    const log = this.props.navigation.getParam('log', {});
+    const { finalRating, notes } = this.state;
+    await firebase
+      .database()
+      .ref(`logs/${userId}/${moment().format()}`)
+      .set({
+        ...log,
+        finalRating,
+        notes
+      });
+    this.props.navigation.navigate('Home');
+  }
+
   render() {
+    const log = this.props.navigation.getParam('log', {});
+    console.log('params', log);
+    // console.log('params', this.props.navigation.state.params);
+
     return (
       <View style={styles.container}>
         <Text style={styles.label}>Final Rating</Text>
@@ -43,11 +63,10 @@ class SubmitLogScreen extends React.Component {
           multiline={true}
           numberOfLines={3}
           placeholder={'This strain makes me feel on top of the world!'}
-          // editable={true}
           style={styles.notesInput}
         />
         <View style={styles.buttonContainer}>
-          <BlackButton onPress={() => this.props.navigation.navigate('Home')} text={'SUBMIT'} />
+          <BlackButton onPress={() => this.onSubmit()} text={'SUBMIT'} />
         </View>
       </View>
     );
