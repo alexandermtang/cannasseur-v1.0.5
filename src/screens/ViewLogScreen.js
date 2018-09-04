@@ -61,10 +61,12 @@ class ViewLogScreen extends React.Component {
             <CircleRating disabled={true} rating={log.sleepy} />
           </View>
         </View>
-        <View style={styles.line} />
-        <Text style={[styles.label, { paddingLeft: 16, marginTop: 32 }]}>GOOD FOR</Text>
+        {log.tags && <View style={styles.line} />}
+        {log.tags && (
+          <Text style={[styles.label, { paddingLeft: 16, marginTop: 16 }]}>GOOD FOR</Text>
+        )}
         <View style={styles.tagsContainer}>
-          {log.tags.map((tag, i) => {
+          {(log.tags || []).map((tag, i) => {
             return (
               <View style={styles.tagButton}>
                 <Text style={styles.tag}>{tag}</Text>
@@ -72,6 +74,8 @@ class ViewLogScreen extends React.Component {
             );
           })}
         </View>
+        {log.notes && <View style={styles.line} />}
+        {log.notes && <Text style={styles.notes}>"{log.notes}"</Text>}
       </ScrollView>
     );
   }
@@ -107,7 +111,7 @@ const styles = StyleSheet.create({
     width: '80%'
   },
   moodChartContainer: {
-    marginTop: 32,
+    marginTop: 16,
     display: 'flex',
     flexDirection: 'row',
     paddingRight: 16
@@ -141,6 +145,7 @@ const styles = StyleSheet.create({
   },
   tagsContainer: {
     marginTop: 16,
+    marginBottom: 16,
     display: 'flex',
     flexWrap: 'wrap',
     flexDirection: 'row',
@@ -160,6 +165,15 @@ const styles = StyleSheet.create({
   tag: {
     fontSize: 16,
     fontFamily: 'WorkSans'
+  },
+  notes: {
+    fontSize: 16,
+    fontFamily: 'PlayfairDisplay-Regular',
+    paddingLeft: '10%',
+    width: '80%',
+    marginTop: 16,
+    paddingBottom: 32,
+    color: '#9B9B9B'
   }
 });
 

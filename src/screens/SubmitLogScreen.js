@@ -73,6 +73,7 @@ class SubmitLogScreen extends React.Component {
           numberOfLines={3}
           placeholder={'This strain makes me feel on top of the world!'}
           style={styles.notesInput}
+          onChangeText={notes => this.setState({ notes })}
         />
         <View style={styles.buttonContainer}>
           <BlackButton onPress={() => this.onSubmit()} text={'SUBMIT'} />

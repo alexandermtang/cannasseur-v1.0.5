@@ -245,7 +245,8 @@ const styles = StyleSheet.create({
   nextButtonContainer: {
     marginTop: 8,
     paddingRight: 16,
-    paddingLeft: 16
+    paddingLeft: 16,
+    paddingBottom: 48
   }
 });
 
