@@ -3,8 +3,10 @@ import { Font } from 'expo';
 import { createSwitchNavigator, createStackNavigator } from 'react-navigation';
 import * as firebase from 'firebase';
 
-import AuthLoadingScreen from './src/screens/AuthLoadingScreen';
-import LoginScreen from './src/screens/LoginScreen';
+import AuthLoadingScreen from './src/screens/Auth/AuthLoadingScreen';
+import LoginScreen from './src/screens/Auth/LoginScreen';
+import SignUpLoginScreen from './src/screens/Auth/SignUpLoginScreen';
+
 import HomeScreen from './src/screens/HomeScreen';
 import MeScreen from './src/screens/MeScreen';
 import CreateNewLogScreen from './src/screens/CreateNewLogScreen';
@@ -13,10 +15,12 @@ import ViewLogScreen from './src/screens/ViewLogScreen';
 
 const AuthStack = createStackNavigator(
   {
-    Login: LoginScreen
+    Login: LoginScreen,
+    // SignUp: SignUpScreen,
+    SignUpLogin: SignUpLoginScreen
   },
   {
-    initialRouteName: 'Login',
+    initialRouteName: 'SignUpLogin',
     headerMode: 'none',
     navigationOptions: {
       headerVisible: false

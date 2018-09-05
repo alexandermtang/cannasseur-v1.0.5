@@ -32,7 +32,7 @@ class LoginScreen extends React.Component {
     return (
       <KeyboardAvoidingView behavior="padding" enabled>
         <View style={styles.top}>
-          <Image source={require('../../assets/cannabis.png')} style={styles.logo} />
+          <Image source={require('../../../assets/cannabis.png')} style={styles.logo} />
           <Text style={styles.title}>cannasseur</Text>
         </View>
         <View style={styles.bottom}>
@@ -51,7 +51,7 @@ class LoginScreen extends React.Component {
               secureTextEntry
             />
           </View>
-          <TouchableOpacity style={styles.login} onPress={() => this.onPress()}>
+          <TouchableOpacity style={styles.loginButton} onPress={() => this.onPress()}>
             <Text style={styles.loginText}>LOG IN</Text>
           </TouchableOpacity>
         </View>
@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     padding: 8
   },
-  login: {
+  loginButton: {
     width: '80%',
     height: 48,
     backgroundColor: '#000',
