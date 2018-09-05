@@ -30,24 +30,30 @@ class HomeScreen extends React.Component {
 
   state = {
     logs: [],
-    isLoading: true
+    isLoading: true,
+    isEmpty: false
   };
 
   async getLogs() {
-    const userId = await AsyncStorage.getItem('userId');
-    const snapshot = await firebase
-      .database()
-      .ref(`logs/${userId}`)
-      .orderByKey()
-      .once('value');
-    const logs = snapshot.val();
+    try {
+      const userId = await AsyncStorage.getItem('userId');
+      const snapshot = await firebase
+        .database()
+        .ref(`logs/${userId}`)
+        .orderByKey()
+        .once('value');
 
-    this.setState({
-      logs: Object.keys(logs)
-        .reverse()
-        .map(date => ({ date, ...logs[date] })),
-      isLoading: false
-    });
+      const logs = snapshot.val();
+      this.setState({
+        logs: Object.keys(logs)
+          .reverse()
+          .map(date => ({ date, ...logs[date] })),
+        isLoading: false
+      });
+    } catch (error) {
+      // console.error(error);
+      this.setState({ isLoading: false, isEmpty: true });
+    }
   }
 
   async componentDidMount() {

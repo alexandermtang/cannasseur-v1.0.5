@@ -14,11 +14,13 @@ import * as firebase from 'firebase';
 class LoginScreen extends React.Component {
   state = {
     email: '',
-    password: ''
+    password: '',
+    hasError: false
   };
 
   async onPress() {
     const { email, password } = this.state;
+
     try {
       await firebase.auth().signInWithEmailAndPassword(email, password);
 
@@ -32,6 +34,7 @@ class LoginScreen extends React.Component {
       });
     } catch (error) {
       console.log(error);
+      this.setState({ hasError: true });
     }
   }
 
@@ -47,17 +50,18 @@ class LoginScreen extends React.Component {
             <TextInput
               autoCapitalize={'none'}
               placeholder={'email'}
-              onChangeText={email => this.setState({ email })}
+              onChangeText={email => this.setState({ email, hasError: false })}
               style={styles.input}
             />
             <TextInput
               autoCapitalize={'none'}
               placeholder={'password'}
-              onChangeText={password => this.setState({ password })}
+              onChangeText={password => this.setState({ password, hasError: false })}
               style={styles.input}
               secureTextEntry
             />
           </View>
+          {this.state.hasError && <Text style={styles.error}>Invalid email or password.</Text>}
           <TouchableOpacity style={styles.loginButton} onPress={() => this.onPress()}>
             <Text style={[styles.buttonText, { color: '#fff' }]}>LOG IN</Text>
           </TouchableOpacity>
@@ -119,6 +123,13 @@ const styles = StyleSheet.create({
     borderColor: '#000',
     borderBottomWidth: 1,
     padding: 8
+  },
+  error: {
+    fontSize: 16,
+    fontFamily: 'WorkSans',
+    color: '#f00',
+    left: '20%',
+    top: 120
   },
   loginButton: {
     width: '80%',
