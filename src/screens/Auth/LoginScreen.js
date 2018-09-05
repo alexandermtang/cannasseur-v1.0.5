@@ -1,19 +1,26 @@
 import React from 'react';
-import { AsyncStorage, StyleSheet, Text, View, TextInput, TouchableOpacity, Image, KeyboardAvoidingView } from 'react-native';
+import {
+  AsyncStorage,
+  StyleSheet,
+  Text,
+  View,
+  TextInput,
+  TouchableOpacity,
+  Image,
+  KeyboardAvoidingView
+} from 'react-native';
 import * as firebase from 'firebase';
 
 class LoginScreen extends React.Component {
   state = {
-    username: '',
+    email: '',
     password: ''
   };
 
   async onPress() {
-    const { username, password } = this.state;
+    const { email, password } = this.state;
     try {
-      await firebase
-        .auth()
-        .signInWithEmailAndPassword(username, password);
+      await firebase.auth().signInWithEmailAndPassword(email, password);
 
       firebase.auth().onAuthStateChanged(user => {
         if (user) {
@@ -39,8 +46,8 @@ class LoginScreen extends React.Component {
           <View style={styles.inputs}>
             <TextInput
               autoCapitalize={'none'}
-              placeholder={'username'}
-              onChangeText={username => this.setState({ username })}
+              placeholder={'email'}
+              onChangeText={email => this.setState({ email })}
               style={styles.input}
             />
             <TextInput
@@ -52,7 +59,13 @@ class LoginScreen extends React.Component {
             />
           </View>
           <TouchableOpacity style={styles.loginButton} onPress={() => this.onPress()}>
-            <Text style={styles.loginText}>LOG IN</Text>
+            <Text style={[styles.buttonText, { color: '#fff' }]}>LOG IN</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.backButton}
+            onPress={() => this.props.navigation.goBack()}
+          >
+            <Text style={[styles.buttonText, { color: '#000' }]}>BACK</Text>
           </TouchableOpacity>
         </View>
         {/* <View style={styles.border} /> */}
@@ -110,18 +123,31 @@ const styles = StyleSheet.create({
   loginButton: {
     width: '80%',
     height: 48,
-    backgroundColor: '#000',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     left: '10%',
     borderRadius: 8,
-    top: 136
+    top: 136,
+    backgroundColor: '#000'
   },
-  loginText: {
-    color: '#FFF',
+  buttonText: {
     fontFamily: 'WorkSans',
     fontSize: 16
+  },
+  backButton: {
+    width: '80%',
+    height: 48,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    left: '10%',
+    borderRadius: 8,
+    top: 136,
+    backgroundColor: '#fff',
+    borderColor: '#000',
+    borderWidth: 1,
+    marginTop: 16
   }
 });
 

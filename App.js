@@ -5,6 +5,7 @@ import * as firebase from 'firebase';
 
 import AuthLoadingScreen from './src/screens/Auth/AuthLoadingScreen';
 import LoginScreen from './src/screens/Auth/LoginScreen';
+import SignUpScreen from './src/screens/Auth/SignUpScreen';
 import SignUpLoginScreen from './src/screens/Auth/SignUpLoginScreen';
 
 import HomeScreen from './src/screens/HomeScreen';
@@ -16,7 +17,7 @@ import ViewLogScreen from './src/screens/ViewLogScreen';
 const AuthStack = createStackNavigator(
   {
     Login: LoginScreen,
-    // SignUp: SignUpScreen,
+    SignUp: SignUpScreen,
     SignUpLogin: SignUpLoginScreen
   },
   {
