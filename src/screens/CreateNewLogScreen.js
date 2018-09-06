@@ -27,6 +27,17 @@ class CreateNewLogScreen extends React.Component {
     hungry: 0,
     sleepy: 0,
     tags: [],
+    tagOptions: [
+      'Ideas',
+      'Laughing',
+      'Movies',
+      'Socializing',
+      'Sleep',
+      'Sex',
+      'Edibles',
+      'Food',
+      'Anxiety'
+    ],
     hasErrors: false
   };
 
@@ -106,17 +117,7 @@ class CreateNewLogScreen extends React.Component {
         </View>
         <Text style={styles.label}>GOOD FOR</Text>
         <View style={styles.tagsContainer}>
-          {[
-            'Ideas',
-            'Laughing',
-            'Movies',
-            'Socializing',
-            'Sleep',
-            'Sex',
-            'Edibles',
-            'Food',
-            'Anxiety'
-          ].map((tag, i) => {
+          {this.state.tagOptions.map((tag, i) => {
             return (
               <TouchableOpacity
                 key={i}
