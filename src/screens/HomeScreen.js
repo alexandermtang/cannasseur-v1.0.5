@@ -296,7 +296,7 @@ const styles = StyleSheet.create({
   modalHeaderContainer: {
     height: 56,
     borderBottomWidth: 1,
-    borderColor: '#000',
+    borderColor: '#9b9b9b',
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
