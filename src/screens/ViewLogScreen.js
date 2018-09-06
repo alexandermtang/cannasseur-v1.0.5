@@ -68,14 +68,20 @@ class ViewLogScreen extends React.Component {
         <View style={styles.tagsContainer}>
           {(log.tags || []).map((tag, i) => {
             return (
-              <View style={styles.tagButton}>
-                <Text style={styles.tag}>{tag}</Text>
+              <View style={styles.button}>
+                <Text style={styles.buttonText}>{tag}</Text>
               </View>
             );
           })}
         </View>
         {log.notes && <View style={styles.line} />}
         {log.notes && <Text style={styles.notes}>"{log.notes}"</Text>}
+        <TouchableOpacity
+          style={[styles.button, styles.editButton]}
+          onPress={() => this.props.navigation.push('CreateNewLog', { log })}
+        >
+          <Text style={[styles.buttonText, { color: '#fff' }]}>EDIT</Text>
+        </TouchableOpacity>
       </ScrollView>
     );
   }
@@ -152,7 +158,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: '100%'
   },
-  tagButton: {
+  button: {
     padding: 8,
     justifyContent: 'center',
     alignItems: 'center',
@@ -162,7 +168,7 @@ const styles = StyleSheet.create({
     height: 48,
     minWidth: 80
   },
-  tag: {
+  buttonText: {
     fontSize: 16,
     fontFamily: 'WorkSans'
   },
@@ -174,6 +180,12 @@ const styles = StyleSheet.create({
     marginTop: 16,
     paddingBottom: 32,
     color: '#9B9B9B'
+  },
+  editButton: {
+    left: '10%',
+    width: '80%',
+    marginBottom: 48,
+    backgroundColor: '#000'
   }
 });
 

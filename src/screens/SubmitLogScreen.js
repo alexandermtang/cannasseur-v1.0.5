@@ -25,14 +25,22 @@ class SubmitLogScreen extends React.Component {
     hasError: false
   };
 
+  componentDidMount() {
+    const log = this.props.navigation.getParam('log', {});
+    if (log) {
+      this.setState({ ...log });
+    }
+  }
+
   async onSubmit() {
     if (this.isComplete()) {
       const userId = await AsyncStorage.getItem('userId');
       const log = this.props.navigation.getParam('log', {});
       const { finalRating, notes } = this.state;
+      const date = this.state.date || moment().format();
       await firebase
         .database()
-        .ref(`logs/${userId}/${moment().format()}`)
+        .ref(`logs/${userId}/${date}`)
         .set({
           ...log,
           finalRating,
@@ -50,6 +58,7 @@ class SubmitLogScreen extends React.Component {
   }
 
   render() {
+    console.log('submit log', this.props.navigation.state);
     return (
       <View style={styles.container}>
         <Text style={[styles.label, this.state.hasError ? styles.error : null]}>
@@ -74,6 +83,7 @@ class SubmitLogScreen extends React.Component {
           placeholder={'This strain makes me feel on top of the world!'}
           style={styles.notesInput}
           onChangeText={notes => this.setState({ notes })}
+          value={this.state.notes}
         />
         <View style={styles.buttonContainer}>
           <BlackButton onPress={() => this.onSubmit()} text={'SUBMIT'} />

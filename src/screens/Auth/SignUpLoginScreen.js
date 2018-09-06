@@ -11,7 +11,7 @@ class SignUpLoginScreen extends React.Component {
         </View>
         <View style={styles.bottom}>
           <TouchableOpacity
-            style={[styles.button, { backgroundColor: '#000', marginTop: 48 }]}
+            style={[styles.button, { backgroundColor: '#000', marginTop: 16 }]}
             onPress={() => this.props.navigation.navigate('SignUp')}
           >
             <Text style={[styles.buttonText, { color: '#fff' }]}>SIGN UP</Text>

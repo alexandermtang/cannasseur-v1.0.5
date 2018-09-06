@@ -30,6 +30,13 @@ class CreateNewLogScreen extends React.Component {
     hasErrors: false
   };
 
+  componentDidMount() {
+    const log = this.props.navigation.getParam('log', null);
+    if (log) {
+      this.setState({ ...log });
+    }
+  }
+
   toggleTag(tag) {
     const { tags } = this.state;
     const newTags = tags.indexOf(tag) === -1 ? [...tags, tag] : tags.filter(t => t !== tag);
@@ -52,6 +59,7 @@ class CreateNewLogScreen extends React.Component {
             style={styles.strainInput}
             placeholder={'Pineapple Express'}
             onChangeText={strain => this.setState({ strain })}
+            value={this.state.strain}
           />
         </View>
         <View style={styles.moodChartContainer}>
@@ -138,7 +146,6 @@ class CreateNewLogScreen extends React.Component {
           <BlackButton
             text={'NEXT'}
             onPress={() => {
-              console.log('NEXT');
               if (this.isComplete()) {
                 this.props.navigation.navigate('SubmitLog', { log: this.state });
                 this.setState({ hasErrors: false });
