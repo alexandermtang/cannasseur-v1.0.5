@@ -29,7 +29,8 @@ class HomeScreen extends React.Component {
   };
 
   state = {
-    logs: [],
+    allLogs: [],
+    filteredLogs: [],
     isLoading: true,
     isEmpty: false
   };
@@ -44,10 +45,13 @@ class HomeScreen extends React.Component {
         .once('value');
 
       const logs = snapshot.val();
+      const allLogs = Object.keys(logs)
+        .reverse()
+        .map(date => ({ date, ...logs[date] }));
+
       this.setState({
-        logs: Object.keys(logs)
-          .reverse()
-          .map(date => ({ date, ...logs[date] })),
+        allLogs,
+        filteredLogs: allLogs,
         isLoading: false
       });
     } catch (error) {
@@ -66,23 +70,42 @@ class HomeScreen extends React.Component {
     }
   }
 
+  search(searchText) {
+    if (searchText === '') {
+      this.setState({ filteredLogs: this.state.allLogs });
+    } else {
+      const filteredLogs = this.state.allLogs.reduce((logs, log) => {
+        const isInclude =
+          log.strain.toLowerCase().includes(searchText.toLowerCase()) ||
+          log.tags.some(tag => tag.toLowerCase().includes(searchText.toLowerCase()));
+        return isInclude ? [...logs, log] : logs;
+      }, []);
+
+      this.setState({ filteredLogs });
+    }
+  }
+
   render() {
     const strainsSet = new Set();
-    this.state.logs.forEach(log => strainsSet.add(log.strain));
+    this.state.allLogs.forEach(log => strainsSet.add(log.strain));
     const numStrains = strainsSet.size;
 
     return (
       <View style={styles.container}>
         <View style={styles.searchInputContainer}>
           <Ionicons style={styles.searchIcon} name={'ios-search'} size={32} />
-          <TextInput style={styles.searchInput} placeholder={'Search'} />
+          <TextInput
+            style={styles.searchInput}
+            placeholder={'Search strain or tag'}
+            onChangeText={searchText => this.search(searchText)}
+          />
         </View>
         {this.state.isLoading ? (
           <ActivityIndicator size="large" color="#9b9b9b" />
         ) : (
           <ScrollView style={styles.logsContainer}>
             <FlatList
-              data={this.state.logs}
+              data={this.state.filteredLogs}
               keyExtractor={(item, i) => i.toString()}
               renderItem={({ item }) => (
                 <ListItem
