@@ -109,7 +109,6 @@ class HomeScreen extends React.Component {
       tempLogs.sort((a, b) => b[type] - a[type]);
       filterText = `MOOD: ${type.toUpperCase()}`;
     }
-    console.log(tempLogs);
 
     this.setState({ filteredLogs: tempLogs, showModal: false, filterText });
   }
@@ -287,7 +286,7 @@ const styles = StyleSheet.create({
     height: '40%',
     width: '100%',
     backgroundColor: '#000',
-    opacity: 0.5
+    opacity: 0.7
   },
   bottom: {
     height: '60%',

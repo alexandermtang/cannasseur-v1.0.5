@@ -10,12 +10,14 @@ import {
   KeyboardAvoidingView
 } from 'react-native';
 import * as firebase from 'firebase';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 class LoginScreen extends React.Component {
   state = {
     email: '',
     password: '',
-    hasError: false
+    hasError: false,
+    isLoading: false
   };
 
   async onPress() {
@@ -34,13 +36,18 @@ class LoginScreen extends React.Component {
       });
     } catch (error) {
       console.log(error);
-      this.setState({ hasError: true });
+      this.setState({ hasError: true, isLoading: false });
     }
   }
 
   render() {
     return (
       <KeyboardAvoidingView behavior="padding" enabled>
+        <Spinner
+          visible={this.state.isLoading}
+          textContent={'Logging in...'}
+          textStyle={{ color: '#FFF', fontFamily: 'PlayfairDisplay-Regular' }}
+        />
         <View style={styles.top}>
           <Image source={require('../../../assets/cannabis.png')} style={styles.logo} />
           <Text style={styles.title}>cannasseur</Text>
@@ -62,7 +69,13 @@ class LoginScreen extends React.Component {
             />
           </View>
           {this.state.hasError && <Text style={styles.error}>Invalid email or password.</Text>}
-          <TouchableOpacity style={styles.loginButton} onPress={() => this.onPress()}>
+          <TouchableOpacity
+            style={styles.loginButton}
+            onPress={() => {
+              this.setState({ isLoading: true });
+              this.onPress();
+            }}
+          >
             <Text style={[styles.buttonText, { color: '#fff' }]}>LOG IN</Text>
           </TouchableOpacity>
           <TouchableOpacity

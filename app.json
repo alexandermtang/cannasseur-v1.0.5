@@ -1,14 +1,15 @@
 {
   "expo": {
     "name": "cannasseur",
-    "description": "This project is really great.",
+    "description": "Become your own cannabis expert",
     "slug": "cannasseur",
     "privacy": "public",
     "sdkVersion": "29.0.0",
-    "platforms": ["ios", "android"],
+    "platforms": ["ios"],
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/cannabis.png",
+    "primaryColor": "#F4F3EF",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
@@ -21,7 +22,8 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": false,
+      "bundleIdentifier": "com.alexandermtang.cannasseur"
     }
   }
 }
