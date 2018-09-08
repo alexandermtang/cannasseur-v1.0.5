@@ -1,3 +1,5 @@
+console.disableYellowBox = true;
+
 import React from 'react';
 import { Font } from 'expo';
 import { createSwitchNavigator, createStackNavigator } from 'react-navigation';
@@ -7,6 +9,7 @@ import AuthLoadingScreen from './src/screens/Auth/AuthLoadingScreen';
 import LoginScreen from './src/screens/Auth/LoginScreen';
 import SignUpScreen from './src/screens/Auth/SignUpScreen';
 import SignUpLoginScreen from './src/screens/Auth/SignUpLoginScreen';
+import ForgotPasswordScreen from './src/screens/Auth/ForgotPasswordScreen';
 
 import HomeScreen from './src/screens/HomeScreen';
 import MeScreen from './src/screens/MeScreen';
@@ -18,7 +21,8 @@ const AuthStack = createStackNavigator(
   {
     Login: LoginScreen,
     SignUp: SignUpScreen,
-    SignUpLogin: SignUpLoginScreen
+    SignUpLogin: SignUpLoginScreen,
+    ForgotPassword: ForgotPasswordScreen
   },
   {
     initialRouteName: 'SignUpLogin',

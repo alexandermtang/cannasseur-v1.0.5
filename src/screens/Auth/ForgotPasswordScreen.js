@@ -1,41 +1,28 @@
 import React from 'react';
-import {
-  AsyncStorage,
-  StyleSheet,
-  Text,
-  View,
-  TextInput,
-  TouchableOpacity,
-  Image
-} from 'react-native';
-import * as firebase from 'firebase';
+import { Text, View, Image, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 import Spinner from 'react-native-loading-spinner-overlay';
+import * as firebase from 'firebase';
 
-class LoginScreen extends React.Component {
+class ForgotPasswordScreen extends React.Component {
   state = {
     email: '',
-    password: '',
     error: '',
     isLoading: false
   };
 
-  async onPress() {
-    const { email, password } = this.state;
+  async onResetPassword() {
+    const { email } = this.state;
+    if (email === '') {
+      return this.setState({ error: 'Missing email.', isLoading: false });
+    }
 
     try {
-      await firebase.auth().signInWithEmailAndPassword(email, password);
-
-      firebase.auth().onAuthStateChanged(user => {
-        if (user) {
-          AsyncStorage.setItem('userId', user.uid);
-          this.props.navigation.navigate('App');
-        } else {
-          AsyncStorage.setItem('userId', '');
-        }
-      });
+      await firebase.auth().sendPasswordResetEmail(email);
+      this.setState({ isLoading: false });
+      this.props.navigation.goBack();
     } catch (error) {
-      console.log(error);
-      this.setState({ error: 'Invalid email or password.', isLoading: false });
+      // console.error(error);
+      this.setState({ error: 'Invalid email.', isLoading: false });
     }
   }
 
@@ -44,35 +31,26 @@ class LoginScreen extends React.Component {
       <View style={styles.container}>
         <Spinner
           visible={this.state.isLoading}
-          textContent={'Logging in...'}
+          textContent={'Sending reset password email...'}
           textStyle={{ color: '#FFF', fontFamily: 'PlayfairDisplay-Regular' }}
         />
         <Image source={require('../../../assets/cannabis.png')} style={styles.logo} />
         <Text style={styles.title}>cannasseur</Text>
-        <View style={styles.inputs}>
-          <TextInput
-            autoCapitalize={'none'}
-            placeholder={'email'}
-            onChangeText={email => this.setState({ email, error: '' })}
-            style={styles.input}
-          />
-          <TextInput
-            autoCapitalize={'none'}
-            placeholder={'password'}
-            onChangeText={password => this.setState({ password, error: '' })}
-            style={styles.input}
-            secureTextEntry
-          />
-        </View>
+        <TextInput
+          autoCapitalize={'none'}
+          placeholder={'email'}
+          onChangeText={email => this.setState({ email, error: '' })}
+          style={styles.input}
+        />
         <Text style={styles.error}>{this.state.error}</Text>
         <TouchableOpacity
-          style={styles.loginButton}
+          style={styles.resetPasswordButton}
           onPress={() => {
             this.setState({ isLoading: true });
-            this.onPress();
+            this.onResetPassword();
           }}
         >
-          <Text style={[styles.buttonText, { color: '#fff' }]}>LOG IN</Text>
+          <Text style={[styles.buttonText, { color: '#fff' }]}>RESET PASSWORD</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.backButton} onPress={() => this.props.navigation.goBack()}>
           <Text style={[styles.buttonText, { color: '#000' }]}>GO BACK</Text>
@@ -95,23 +73,10 @@ const styles = StyleSheet.create({
     height: 150,
     bottom: 16
   },
-  border: {
-    borderColor: '#000',
-    borderWidth: 2,
-    height: '90%',
-    width: '90%',
-    position: 'absolute',
-    zIndex: 100,
-    left: '5%',
-    top: '5%'
-  },
   title: {
     bottom: 16,
     fontSize: 40,
     fontFamily: 'PlayfairDisplay-Italic'
-  },
-  inputs: {
-    width: '80%'
   },
   input: {
     fontFamily: 'PlayfairDisplay-Regular',
@@ -119,7 +84,8 @@ const styles = StyleSheet.create({
     fontSize: 20,
     borderColor: '#000',
     borderBottomWidth: 1,
-    padding: 8
+    padding: 8,
+    width: '80%'
   },
   error: {
     fontSize: 16,
@@ -127,18 +93,15 @@ const styles = StyleSheet.create({
     color: '#f00',
     height: 24
   },
-  loginButton: {
+  resetPasswordButton: {
     width: '80%',
     height: 48,
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 8,
-    backgroundColor: '#000'
-  },
-  buttonText: {
-    fontFamily: 'WorkSans',
-    fontSize: 16
+    backgroundColor: '#000',
+    marginTop: 4
   },
   backButton: {
     width: '80%',
@@ -146,8 +109,8 @@ const styles = StyleSheet.create({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 88
+    marginTop: 128
   }
 });
 
-export default LoginScreen;
+export default ForgotPasswordScreen;
