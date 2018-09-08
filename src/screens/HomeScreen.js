@@ -112,7 +112,6 @@ class HomeScreen extends React.Component {
         duration: 250 // Make it take a while
       }
     ).start(finished => {
-      console.log('finished', finished);
       this.setState({ showModal: false });
     });
   }
@@ -132,14 +131,23 @@ class HomeScreen extends React.Component {
       filterText = `MOOD: ${type.toUpperCase()}`;
     }
 
-    this.setState({ filteredLogs: tempLogs, showModal: false, filterText });
+    this.setState({ filterText });
+    Animated.timing(
+      // Animate over time
+      this.state.bottomAnim, // The animated value to drive
+      {
+        toValue: -600, // Animate to opacity: 1 (opaque)
+        duration: 250 // Make it take a while
+      }
+    ).start(finished => {
+      this.setState({ filteredLogs: tempLogs, showModal: false });
+    });
   }
 
   render() {
     const strainsSet = new Set();
     this.state.allLogs.forEach(log => strainsSet.add(log.strain));
     const numStrains = strainsSet.size;
-    // console.log('logs', this.state.filteredLogs);
 
     return (
       <View style={styles.container}>
