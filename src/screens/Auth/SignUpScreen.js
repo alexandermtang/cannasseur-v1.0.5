@@ -91,7 +91,7 @@ class SignUpScreen extends React.Component {
           <Text style={[styles.buttonText, { color: '#fff' }]}>CREATE ACCOUNT</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={[styles.button, { marginTop: 120 }]}
+          style={[styles.button, { marginTop: 128 }]}
           onPress={() => this.props.navigation.goBack()}
         >
           <Text style={[styles.buttonText, { color: '#000' }]}>GO BACK</Text>
