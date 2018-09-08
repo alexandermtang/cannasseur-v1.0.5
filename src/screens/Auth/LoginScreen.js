@@ -6,8 +6,7 @@ import {
   View,
   TextInput,
   TouchableOpacity,
-  Image,
-  KeyboardAvoidingView
+  Image
 } from 'react-native';
 import * as firebase from 'firebase';
 import Spinner from 'react-native-loading-spinner-overlay';
@@ -16,6 +15,7 @@ class LoginScreen extends React.Component {
   state = {
     email: '',
     password: '',
+    error: '',
     hasError: false,
     isLoading: false
   };
@@ -36,57 +36,49 @@ class LoginScreen extends React.Component {
       });
     } catch (error) {
       console.log(error);
-      this.setState({ hasError: true, isLoading: false });
+      this.setState({ error: 'Invalid email or password.', isLoading: false });
     }
   }
 
   render() {
     return (
-      <KeyboardAvoidingView behavior="padding" enabled>
+      <View style={styles.container}>
         <Spinner
           visible={this.state.isLoading}
           textContent={'Logging in...'}
           textStyle={{ color: '#FFF', fontFamily: 'PlayfairDisplay-Regular' }}
         />
-        <View style={styles.top}>
-          <Image source={require('../../../assets/cannabis.png')} style={styles.logo} />
-          <Text style={styles.title}>cannasseur</Text>
+        <Image source={require('../../../assets/cannabis.png')} style={styles.logo} />
+        <Text style={styles.title}>cannasseur</Text>
+        <View style={styles.inputs}>
+          <TextInput
+            autoCapitalize={'none'}
+            placeholder={'email'}
+            onChangeText={email => this.setState({ email, error: '' })}
+            style={styles.input}
+          />
+          <TextInput
+            autoCapitalize={'none'}
+            placeholder={'password'}
+            onChangeText={password => this.setState({ password, error: '' })}
+            style={styles.input}
+            secureTextEntry
+          />
         </View>
-        <View style={styles.bottom}>
-          <View style={styles.inputs}>
-            <TextInput
-              autoCapitalize={'none'}
-              placeholder={'email'}
-              onChangeText={email => this.setState({ email, hasError: false })}
-              style={styles.input}
-            />
-            <TextInput
-              autoCapitalize={'none'}
-              placeholder={'password'}
-              onChangeText={password => this.setState({ password, hasError: false })}
-              style={styles.input}
-              secureTextEntry
-            />
-          </View>
-          {this.state.hasError && <Text style={styles.error}>Invalid email or password.</Text>}
-          <TouchableOpacity
-            style={styles.loginButton}
-            onPress={() => {
-              this.setState({ isLoading: true });
-              this.onPress();
-            }}
-          >
-            <Text style={[styles.buttonText, { color: '#fff' }]}>LOG IN</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.backButton}
-            onPress={() => this.props.navigation.goBack()}
-          >
-            <Text style={[styles.buttonText, { color: '#000' }]}>BACK</Text>
-          </TouchableOpacity>
-        </View>
-        {/* <View style={styles.border} /> */}
-      </KeyboardAvoidingView>
+        <Text style={styles.error}>{this.state.error}</Text>
+        <TouchableOpacity
+          style={styles.loginButton}
+          onPress={() => {
+            this.setState({ isLoading: true });
+            this.onPress();
+          }}
+        >
+          <Text style={[styles.buttonText, { color: '#fff' }]}>LOG IN</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.backButton} onPress={() => this.props.navigation.goBack()}>
+          <Text style={[styles.buttonText, { color: '#000' }]}>GO BACK</Text>
+        </TouchableOpacity>
+      </View>
     );
   }
 }
@@ -107,10 +99,11 @@ const styles = StyleSheet.create({
     left: '5%',
     top: '5%'
   },
-  top: {
-    height: '50%',
+  container: {
+    height: '100%',
+    width: '100%',
     alignItems: 'center',
-    justifyContent: 'flex-end',
+    justifyContent: 'center',
     backgroundColor: '#F4F3EF'
   },
   title: {
@@ -118,16 +111,8 @@ const styles = StyleSheet.create({
     fontSize: 40,
     fontFamily: 'PlayfairDisplay-Italic'
   },
-  bottom: {
-    height: '50%',
-    zIndex: 200,
-    backgroundColor: '#FFF'
-  },
   inputs: {
-    top: 16,
-    left: '15%',
-    position: 'absolute',
-    width: '70%'
+    width: '80%'
   },
   input: {
     fontFamily: 'PlayfairDisplay-Regular',
@@ -141,8 +126,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: 'WorkSans',
     color: '#f00',
-    left: '20%',
-    top: 120
+    height: 24
   },
   loginButton: {
     width: '80%',
@@ -150,9 +134,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    left: '10%',
     borderRadius: 8,
-    top: 136,
     backgroundColor: '#000'
   },
   buttonText: {
@@ -165,13 +147,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    left: '10%',
-    borderRadius: 8,
-    top: 136,
-    backgroundColor: '#fff',
-    borderColor: '#000',
-    borderWidth: 1,
-    marginTop: 16
+    marginTop: 88
   }
 });
 
