@@ -26,6 +26,21 @@ class MeScreen extends React.Component {
     };
   };
 
+  state = {
+    email: ''
+  };
+
+  async componentDidMount() {
+    const userId = await AsyncStorage.getItem('userId');
+    const snapshot = await firebase
+      .database()
+      .ref(`/users/${userId}/email`)
+      .once('value');
+    const email = snapshot.val();
+
+    this.setState({ email });
+  }
+
   async logout() {
     await AsyncStorage.clear();
     await firebase.auth().signOut();
@@ -35,6 +50,7 @@ class MeScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
+        <Text style={styles.email}>{this.state.email}</Text>
         <BlackButton onPress={() => this.logout()} text={'LOG OUT'} />
       </View>
     );
@@ -47,8 +63,15 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     padding: 32,
-    paddingTop: '90%'
+    alignItems: 'center',
+    justifyContent: 'center'
   },
+  email: {
+    fontSize: 24,
+    fontFamily: 'PlayfairDisplay-Regular',
+    height: 32,
+    marginBottom: 32
+  }
 });
 
 export default MeScreen;
