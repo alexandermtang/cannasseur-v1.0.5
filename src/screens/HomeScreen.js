@@ -1,12 +1,15 @@
 import React from 'react';
 import {
+  Animated,
   AsyncStorage,
   ActivityIndicator,
+  Easing,
   StyleSheet,
   Text,
   View,
   TextInput,
   TouchableOpacity,
+  TouchableHighlight,
   FlatList
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
@@ -34,7 +37,8 @@ class HomeScreen extends React.Component {
     isLoading: true,
     isEmpty: false,
     showModal: false,
-    filterText: 'MOST RECENT'
+    filterText: 'MOST RECENT',
+    bottomAnim: new Animated.Value(-600)
   };
 
   async getLogs() {
@@ -88,11 +92,29 @@ class HomeScreen extends React.Component {
   }
 
   showModal() {
+    Animated.timing(
+      // Animate over time
+      this.state.bottomAnim, // The animated value to drive
+      {
+        toValue: 0, // Animate to opacity: 1 (opaque)
+        duration: 250 // Make it take a while
+      }
+    ).start();
     this.setState({ showModal: true });
   }
 
   hideModal() {
-    this.setState({ showModal: false });
+    Animated.timing(
+      // Animate over time
+      this.state.bottomAnim, // The animated value to drive
+      {
+        toValue: -600, // Animate to opacity: 1 (opaque)
+        duration: 250 // Make it take a while
+      }
+    ).start(finished => {
+      console.log('finished', finished);
+      this.setState({ showModal: false });
+    });
   }
 
   sortBy(type = 'mostRecent') {
@@ -168,8 +190,10 @@ class HomeScreen extends React.Component {
         </View>
         {this.state.showModal && (
           <View style={styles.modal}>
-            <TouchableOpacity style={styles.top} onPress={() => this.hideModal()} />
-            <View style={styles.bottom}>
+            <TouchableHighlight style={styles.top} onPress={() => this.hideModal()}>
+              <View />
+            </TouchableHighlight>
+            <Animated.View style={[styles.bottom, { bottom: this.state.bottomAnim }]}>
               <View style={styles.modalHeaderContainer}>
                 <Ionicons
                   style={styles.closeIcon}
@@ -190,7 +214,7 @@ class HomeScreen extends React.Component {
                 <FilterButton onPress={() => this.sortBy('sleepy')} text={'MOOD: SLEEPY'} />
               </ScrollView>
               <View />
-            </View>
+            </Animated.View>
           </View>
         )}
       </View>
@@ -283,14 +307,19 @@ const styles = StyleSheet.create({
     // bottom: 90
   },
   top: {
-    height: '40%',
+    height: '100%',
     width: '100%',
     backgroundColor: '#000',
-    opacity: 0.7
+    opacity: 0.7,
+    position: 'absolute',
+    zIndex: 300
   },
   bottom: {
     height: '60%',
-    backgroundColor: '#fff'
+    width: '100%',
+    backgroundColor: '#fff',
+    position: 'absolute',
+    zIndex: 400
   },
   modalHeaderContainer: {
     height: 56,
@@ -303,8 +332,12 @@ const styles = StyleSheet.create({
   },
   closeIcon: {
     position: 'absolute',
-    top: 12,
-    left: 16
+    top: 0,
+    left: 0,
+    paddingTop: 12,
+    paddingLeft: 16,
+    paddingBottom: 12,
+    paddingRight: 16
   },
   filterOptionsHeaderText: {
     fontSize: 24,
