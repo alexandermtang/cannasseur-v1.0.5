@@ -68,7 +68,7 @@ class ViewLogScreen extends React.Component {
         <View style={styles.tagsContainer}>
           {(log.tags || []).map((tag, i) => {
             return (
-              <View style={styles.button}>
+              <View style={styles.button} key={i}>
                 <Text style={styles.buttonText}>{tag}</Text>
               </View>
             );

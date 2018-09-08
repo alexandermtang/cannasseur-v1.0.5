@@ -79,7 +79,7 @@ class HomeScreen extends React.Component {
       const filteredLogs = this.state.allLogs.reduce((logs, log) => {
         const isInclude =
           log.strain.toLowerCase().includes(searchText.toLowerCase()) ||
-          log.tags.some(tag => tag.toLowerCase().includes(searchText.toLowerCase()));
+          (log.tags || []).some(tag => tag.toLowerCase().includes(searchText.toLowerCase()));
         return isInclude ? [...logs, log] : logs;
       }, []);
 
@@ -117,7 +117,7 @@ class HomeScreen extends React.Component {
     const strainsSet = new Set();
     this.state.allLogs.forEach(log => strainsSet.add(log.strain));
     const numStrains = strainsSet.size;
-    console.log('logs', this.state.filteredLogs);
+    // console.log('logs', this.state.filteredLogs);
 
     return (
       <View style={styles.container}>
