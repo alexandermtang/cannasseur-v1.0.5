@@ -5,14 +5,28 @@ import Spinner from 'react-native-loading-spinner-overlay';
 
 class SignUpScreen extends React.Component {
   state = {
+    name: '',
     email: '',
     password: '',
-    hasError: false,
+    confirmPassword: '',
+    error: '',
     isLoading: false
   };
 
   async onSignUp() {
-    const { email, password } = this.state;
+    const { name, email, password, confirmPassword } = this.state;
+    if (name === '') {
+      return this.setState({ error: 'Missing name.', isLoading: false });
+    }
+
+    if (email === '') {
+      return this.setState({ error: 'Missing email.', isLoading: false });
+    }
+
+    if (password !== confirmPassword) {
+      return this.setState({ error: 'Passwords must match.', isLoading: false });
+    }
+
     try {
       await firebase.auth().createUserWithEmailAndPassword(email, password);
 
@@ -22,7 +36,7 @@ class SignUpScreen extends React.Component {
           firebase
             .database()
             .ref(`users/${user.uid}`)
-            .set({ email });
+            .set({ name, email });
           this.props.navigation.navigate('App');
         } else {
           AsyncStorage.setItem('userId', '');
@@ -30,7 +44,7 @@ class SignUpScreen extends React.Component {
       });
     } catch (error) {
       console.log(error);
-      this.setState({ hasError: true, isLoading: false });
+      this.setState({ error: 'Invalid email or password.', isLoading: false });
     }
   }
 
@@ -39,38 +53,49 @@ class SignUpScreen extends React.Component {
       <View style={styles.container}>
         <Spinner
           visible={this.state.isLoading}
-          textContent={'Signing up...'}
+          textContent={'Creating account...'}
           textStyle={{ color: '#FFF', fontFamily: 'PlayfairDisplay-Regular' }}
         />
-        <View style={styles.top}>
-          <TextInput
-            style={styles.input}
-            placeholder={'email'}
-            onChangeText={email => this.setState({ email, hasError: false })}
-            autoCapitalize={'none'}
-          />
-          <TextInput
-            style={styles.input}
-            placeholder={'password'}
-            onChangeText={password => this.setState({ password, hasError: false })}
-            secureTextEntry
-          />
-        </View>
-        <View style={styles.bottom}>
-          {this.state.hasError && <Text style={styles.error}>Invalid email or password.</Text>}
-          <TouchableOpacity
-            style={[styles.button, { backgroundColor: '#000' }]}
-            onPress={() => {
-              this.setState({ isLoading: true });
-              this.onSignUp();
-            }}
-          >
-            <Text style={[styles.buttonText, { color: '#fff' }]}>SIGN UP</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.button} onPress={() => this.props.navigation.goBack()}>
-            <Text style={[styles.buttonText, { color: '#000' }]}>BACK</Text>
-          </TouchableOpacity>
-        </View>
+        <TextInput
+          style={styles.input}
+          placeholder={'name'}
+          onChangeText={name => this.setState({ name, error: '' })}
+          autoCapitalize={'none'}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder={'email'}
+          onChangeText={email => this.setState({ email, error: '' })}
+          autoCapitalize={'none'}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder={'password'}
+          onChangeText={password => this.setState({ password, error: '' })}
+          secureTextEntry
+        />
+        <TextInput
+          style={styles.input}
+          placeholder={'confirm password'}
+          onChangeText={confirmPassword => this.setState({ confirmPassword, hasError: false })}
+          secureTextEntry
+        />
+        <Text style={styles.error}>{this.state.error}</Text>}
+        <TouchableOpacity
+          style={[styles.button, styles.signUpButton]}
+          onPress={() => {
+            this.setState({ isLoading: true });
+            this.onSignUp();
+          }}
+        >
+          <Text style={[styles.buttonText, { color: '#fff' }]}>CREATE ACCOUNT</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.button, { marginTop: 120 }]}
+          onPress={() => this.props.navigation.goBack()}
+        >
+          <Text style={[styles.buttonText, { color: '#000' }]}>GO BACK</Text>
+        </TouchableOpacity>
       </View>
     );
   }
@@ -78,30 +103,19 @@ class SignUpScreen extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    // justifyContent: 'center',
-    // alignItems: 'center',
-    // height: '100%',
-    // width: '100%'
-  },
-  top: {
-    height: '50%',
-    backgroundColor: '#F4F3EF',
-    justifyContent: 'flex-end'
-  },
-  bottom: {
-    height: '50%',
-    backgroundColor: '#fff',
-    justifyContent: 'flex-start'
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '100%',
+    width: '100%',
+    backgroundColor: '#F4F3EF'
   },
   input: {
     fontSize: 24,
     fontFamily: 'PlayfairDisplay-Regular',
     borderBottomWidth: 1,
-    // borderColor: '#d8d8d8',
     padding: 8,
-    marginBottom: 16,
-    width: '80%',
-    left: '10%'
+    marginTop: 16,
+    width: '80%'
   },
   button: {
     width: '80%',
@@ -109,21 +123,21 @@ const styles = StyleSheet.create({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    left: '10%',
-    borderRadius: 8,
-    backgroundColor: '#fff',
+    marginBottom: 16
+  },
+  signUpButton: {
+    backgroundColor: '#000',
     borderColor: '#000',
     borderWidth: 1,
-    marginTop: 16
+    borderRadius: 8
   },
   error: {
     fontSize: 16,
     fontFamily: 'WorkSans',
     color: '#f00',
-    left: '20%',
-    top: 8,
-    marginBottom: 4
-  },
+    height: 24,
+    marginTop: 8
+  }
 });
 
 export default SignUpScreen;

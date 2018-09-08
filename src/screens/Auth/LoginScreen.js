@@ -16,7 +16,6 @@ class LoginScreen extends React.Component {
     email: '',
     password: '',
     error: '',
-    hasError: false,
     isLoading: false
   };
 

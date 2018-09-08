@@ -4,10 +4,7 @@ import {
   StyleSheet,
   Text,
   View,
-  TextInput,
   TouchableOpacity,
-  Image,
-  FlatList
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import * as firebase from 'firebase';
@@ -27,6 +24,7 @@ class MeScreen extends React.Component {
   };
 
   state = {
+    name: '',
     email: ''
   };
 
@@ -34,11 +32,11 @@ class MeScreen extends React.Component {
     const userId = await AsyncStorage.getItem('userId');
     const snapshot = await firebase
       .database()
-      .ref(`/users/${userId}/email`)
+      .ref(`/users/${userId}`)
       .once('value');
-    const email = snapshot.val();
+    const { name, email } = snapshot.val();
 
-    this.setState({ email });
+    this.setState({ name, email });
   }
 
   async logout() {
@@ -50,7 +48,8 @@ class MeScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.email}>{this.state.email}</Text>
+        <Text style={styles.text}>{this.state.name}</Text>
+        <Text style={[styles.text, { marginBottom: 64 }]}>{this.state.email}</Text>
         <BlackButton onPress={() => this.logout()} text={'LOG OUT'} />
       </View>
     );
@@ -66,11 +65,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center'
   },
-  email: {
+  text: {
     fontSize: 24,
     fontFamily: 'PlayfairDisplay-Regular',
     height: 32,
-    marginBottom: 32
+    marginBottom: 16
   }
 });
 
