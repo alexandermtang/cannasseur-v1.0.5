@@ -30,7 +30,7 @@ class LoginScreen extends React.Component {
           AsyncStorage.setItem('userId', user.uid);
           this.props.navigation.navigate('App');
         } else {
-          AsyncStorage.setItem('userId', '');
+          AsyncStorage.clear();
         }
       });
     } catch (error) {

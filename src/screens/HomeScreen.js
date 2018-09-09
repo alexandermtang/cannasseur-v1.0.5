@@ -10,7 +10,8 @@ import {
   TextInput,
   TouchableOpacity,
   TouchableHighlight,
-  FlatList
+  FlatList,
+  RefreshControl
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import * as firebase from 'firebase';
@@ -35,10 +36,10 @@ class HomeScreen extends React.Component {
     allLogs: [],
     filteredLogs: [],
     isLoading: true,
-    isEmpty: false,
     showModal: false,
     filterText: 'MOST RECENT',
-    bottomAnim: new Animated.Value(-600)
+    bottomAnim: new Animated.Value(-600),
+    refreshing: false
   };
 
   async getLogs() {
@@ -62,7 +63,7 @@ class HomeScreen extends React.Component {
       });
     } catch (error) {
       // console.error(error);
-      this.setState({ isLoading: false, isEmpty: true });
+      this.setState({ isLoading: false });
     }
   }
 
@@ -144,6 +145,11 @@ class HomeScreen extends React.Component {
     });
   }
 
+  async onRefresh() {
+    await this.getLogs();
+    this.setState({ refreshing: false });
+  }
+
   render() {
     const strainsSet = new Set();
     this.state.allLogs.forEach(log => strainsSet.add(log.strain));
@@ -168,7 +174,18 @@ class HomeScreen extends React.Component {
         {this.state.isLoading ? (
           <ActivityIndicator size="large" color="#9b9b9b" />
         ) : (
-          <ScrollView style={styles.logsContainer}>
+          <ScrollView
+            style={styles.logsContainer}
+            refreshControl={
+              <RefreshControl
+                refreshing={this.state.refreshing}
+                onRefresh={() => {
+                  this.setState({ refreshing: true });
+                  this.onRefresh();
+                }}
+              />
+            }
+          >
             <FlatList
               data={this.state.filteredLogs}
               keyExtractor={(item, i) => i.toString()}
