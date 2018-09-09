@@ -18,12 +18,22 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.alexandermtang.cannasseur"
+    },
+    "hooks": {
+      "postPublish": [
+        {
+          "file": "sentry-expo/upload-sourcemaps",
+          "config": {
+            "organization": "alex-tang",
+            "project": "cannasseur",
+            "authToken": "979d1ee320f14a8a8000eec01d5f6383bb9cebfc1bfe4b20b4f7dbcf4146ed45"
+          }
+        }
+      ]
     }
   }
 }

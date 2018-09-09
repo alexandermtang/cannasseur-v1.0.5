@@ -4,6 +4,7 @@ import React from 'react';
 import { Font } from 'expo';
 import { createSwitchNavigator, createStackNavigator } from 'react-navigation';
 import * as firebase from 'firebase';
+import Sentry from 'sentry-expo';
 
 import AuthLoadingScreen from './src/screens/Auth/AuthLoadingScreen';
 import LoginScreen from './src/screens/Auth/LoginScreen';
@@ -16,6 +17,20 @@ import MeScreen from './src/screens/MeScreen';
 import CreateNewLogScreen from './src/screens/CreateNewLogScreen';
 import SubmitLogScreen from './src/screens/SubmitLogScreen';
 import ViewLogScreen from './src/screens/ViewLogScreen';
+
+// Remove this once Sentry is correctly setup.
+// Sentry.enableInExpoDevelopment = true;
+Sentry.config('https://a1cda1492c96487c9f552d2fda4aa5ce@sentry.io/1277442').install();
+// Sentry.captureException(new Error('Oops!'))
+
+firebase.initializeApp({
+  apiKey: 'AIzaSyAhvETpCtA9thHsBvq9Nms08jXB8X93kWc',
+  authDomain: 'cannasseur-3e6f3.firebaseapp.com',
+  databaseURL: 'https://cannasseur-3e6f3.firebaseio.com',
+  projectId: 'cannasseur-3e6f3',
+  storageBucket: 'cannasseur-3e6f3.appspot.com',
+  messagingSenderId: '59531614040'
+});
 
 const AuthStack = createStackNavigator(
   {
@@ -70,19 +85,6 @@ class App extends React.Component {
   state = {
     fontLoaded: false
   };
-
-  constructor() {
-    super();
-    const config = {
-      apiKey: 'AIzaSyAhvETpCtA9thHsBvq9Nms08jXB8X93kWc',
-      authDomain: 'cannasseur-3e6f3.firebaseapp.com',
-      databaseURL: 'https://cannasseur-3e6f3.firebaseio.com',
-      projectId: 'cannasseur-3e6f3',
-      storageBucket: 'cannasseur-3e6f3.appspot.com',
-      messagingSenderId: '59531614040'
-    };
-    firebase.initializeApp(config);
-  }
 
   async componentDidMount() {
     await Font.loadAsync({
