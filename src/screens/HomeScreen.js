@@ -173,6 +173,10 @@ class HomeScreen extends React.Component {
         </View>
         {this.state.isLoading ? (
           <ActivityIndicator size="large" color="#9b9b9b" />
+        ) : numStrains === 0 ? (
+          <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+            <Text style={{ fontFamily: 'WorkSans', fontSize: 16 }}>NO LOGS</Text>
+          </View>
         ) : (
           <ScrollView
             style={styles.logsContainer}
