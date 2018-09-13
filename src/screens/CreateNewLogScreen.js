@@ -26,6 +26,14 @@ class CreateNewLogScreen extends React.Component {
     relaxed: 0,
     hungry: 0,
     sleepy: 0,
+
+    anxiety: 0,
+    migraines: 0,
+    cramps: 0,
+    depression: 0,
+    pain: 0,
+    insomnia: 0,
+
     tags: [],
     tagOptions: [
       'Ideas',
@@ -38,7 +46,9 @@ class CreateNewLogScreen extends React.Component {
       'Food',
       'Anxiety'
     ],
-    hasErrors: false
+    hasErrors: false,
+
+    ratingsType: 'mood' // or 'medical'
   };
 
   componentDidMount() {
@@ -73,48 +83,100 @@ class CreateNewLogScreen extends React.Component {
             value={this.state.strain}
           />
         </View>
-        <View style={styles.moodChartContainer}>
-          <View style={styles.left} />
-          <View style={styles.moodChartRight}>
-            <Text style={styles.label}>MOOD CHART</Text>
-          </View>
+        <View style={styles.ratingsTypeContainer}>
+          <TouchableOpacity
+            style={[styles.half, { borderRightWidth: 1 }]}
+            onPress={() => {
+              this.setState({ ratingsType: 'mood' });
+            }}
+          >
+            <Text style={styles.label}>MOOD</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.half}
+            onPress={() => {
+              this.setState({ ratingsType: 'medical' });
+            }}
+          >
+            <Text style={styles.label}>MEDICAL</Text>
+          </TouchableOpacity>
         </View>
-        <View style={styles.ratingsContainer}>
-          <View style={styles.left}>
-            <Text style={styles.rating}>Happy</Text>
-            <Text style={styles.rating}>Creative</Text>
-            <Text style={styles.rating}>Active</Text>
-            <Text style={styles.rating}>Relaxed</Text>
-            <Text style={styles.rating}>Hungry</Text>
-            <Text style={styles.rating}>Sleepy</Text>
+        {this.state.ratingsType === 'mood' && (
+          <View style={styles.ratingsContainer}>
+            <View style={styles.left}>
+              <Text style={styles.rating}>Happy</Text>
+              <Text style={styles.rating}>Creative</Text>
+              <Text style={styles.rating}>Active</Text>
+              <Text style={styles.rating}>Relaxed</Text>
+              <Text style={styles.rating}>Hungry</Text>
+              <Text style={styles.rating}>Sleepy</Text>
+            </View>
+            <View style={styles.right}>
+              <CircleRating
+                rating={this.state.happy}
+                selectedStar={rating => this.setState({ happy: rating })}
+              />
+              <CircleRating
+                rating={this.state.creative}
+                selectedStar={rating => this.setState({ creative: rating })}
+              />
+              <CircleRating
+                rating={this.state.active}
+                selectedStar={rating => this.setState({ active: rating })}
+              />
+              <CircleRating
+                rating={this.state.relaxed}
+                selectedStar={rating => this.setState({ relaxed: rating })}
+              />
+              <CircleRating
+                rating={this.state.hungry}
+                selectedStar={rating => this.setState({ hungry: rating })}
+              />
+              <CircleRating
+                rating={this.state.sleepy}
+                selectedStar={rating => this.setState({ sleepy: rating })}
+              />
+            </View>
           </View>
-          <View style={styles.right}>
-            <CircleRating
-              rating={this.state.happy}
-              selectedStar={rating => this.setState({ happy: rating })}
-            />
-            <CircleRating
-              rating={this.state.creative}
-              selectedStar={rating => this.setState({ creative: rating })}
-            />
-            <CircleRating
-              rating={this.state.active}
-              selectedStar={rating => this.setState({ active: rating })}
-            />
-            <CircleRating
-              rating={this.state.relaxed}
-              selectedStar={rating => this.setState({ relaxed: rating })}
-            />
-            <CircleRating
-              rating={this.state.hungry}
-              selectedStar={rating => this.setState({ hungry: rating })}
-            />
-            <CircleRating
-              rating={this.state.sleepy}
-              selectedStar={rating => this.setState({ sleepy: rating })}
-            />
+        )}
+        {this.state.ratingsType === 'medical' && (
+          <View style={styles.ratingsContainer}>
+            <View style={styles.left}>
+              <Text style={styles.rating}>Anxiety</Text>
+              <Text style={styles.rating}>Migraines</Text>
+              <Text style={styles.rating}>Cramps</Text>
+              <Text style={styles.rating}>Depression</Text>
+              <Text style={styles.rating}>Pain</Text>
+              <Text style={styles.rating}>Insomnia</Text>
+            </View>
+            <View style={styles.right}>
+              <CircleRating
+                rating={this.state.anxiety}
+                selectedStar={rating => this.setState({ anxiety: rating })}
+              />
+              <CircleRating
+                rating={this.state.migraines}
+                selectedStar={rating => this.setState({ migraines: rating })}
+              />
+              <CircleRating
+                rating={this.state.cramps}
+                selectedStar={rating => this.setState({ cramps: rating })}
+              />
+              <CircleRating
+                rating={this.state.depression}
+                selectedStar={rating => this.setState({ depression: rating })}
+              />
+              <CircleRating
+                rating={this.state.pain}
+                selectedStar={rating => this.setState({ pain: rating })}
+              />
+              <CircleRating
+                rating={this.state.insomnia}
+                selectedStar={rating => this.setState({ insomnia: rating })}
+              />
+            </View>
           </View>
-        </View>
+        )}
         <Text style={styles.label}>GOOD FOR</Text>
         <View style={styles.tagsContainer}>
           {this.state.tagOptions.map((tag, i) => {
@@ -176,19 +238,23 @@ const styles = StyleSheet.create({
     borderColor: '#9B9B9B',
     borderBottomWidth: 1
   },
-  moodChartContainer: {
+  ratingsTypeContainer: {
     display: 'flex',
     flexDirection: 'row',
     marginTop: 16,
-    marginBottom: 8
+    marginBottom: 8,
+    borderWidth: 1,
+    // padding: 8,
+    borderRadius: 8
   },
   label: {
     fontSize: 16,
     fontFamily: 'WorkSans'
   },
-  moodChartRight: {
+  half: {
     width: '50%',
-    alignItems: 'center'
+    alignItems: 'center',
+    padding: 8
   },
   ratingsContainer: {
     display: 'flex',

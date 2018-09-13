@@ -8,7 +8,7 @@ const ListItem = ({ item, onPress, onPressDelete }) => {
 
   const swipeoutBtns = [
     {
-      text: 'Delete',
+      text: 'DELETE',
       onPress: () => onPressDelete(),
       backgroundColor: '#000',
       color: '#fff'
