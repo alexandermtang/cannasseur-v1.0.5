@@ -18,6 +18,10 @@ class ViewLogScreen extends React.Component {
     };
   };
 
+  state = {
+    ratingsType: 'mood' // or 'medical'
+  };
+
   render() {
     const log = this.props.navigation.getParam('log', {});
 
@@ -37,30 +41,64 @@ class ViewLogScreen extends React.Component {
           />
         </View>
         <View style={styles.line} />
-        <View style={styles.moodChartContainer}>
-          <View style={styles.left} />
-          <View style={styles.moodChartRight}>
-            <Text style={styles.label}>MOOD CHART</Text>
-          </View>
+        <View style={styles.ratingsTypeContainer}>
+          <TouchableOpacity
+            style={[styles.half, { borderRightWidth: 1 }]}
+            onPress={() => {
+              this.setState({ ratingsType: 'mood' });
+            }}
+          >
+            <Text style={styles.label}>MOOD</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.half}
+            onPress={() => {
+              this.setState({ ratingsType: 'medical' });
+            }}
+          >
+            <Text style={styles.label}>MEDICAL</Text>
+          </TouchableOpacity>
         </View>
-        <View style={styles.ratingsContainer}>
-          <View style={styles.left}>
-            <Text style={styles.rating}>Happy</Text>
-            <Text style={styles.rating}>Creative</Text>
-            <Text style={styles.rating}>Active</Text>
-            <Text style={styles.rating}>Relaxed</Text>
-            <Text style={styles.rating}>Hungry</Text>
-            <Text style={styles.rating}>Sleepy</Text>
+        {this.state.ratingsType === 'mood' && (
+          <View style={styles.ratingsContainer}>
+            <View style={styles.left}>
+              <Text style={styles.rating}>Happy</Text>
+              <Text style={styles.rating}>Creative</Text>
+              <Text style={styles.rating}>Active</Text>
+              <Text style={styles.rating}>Relaxed</Text>
+              <Text style={styles.rating}>Hungry</Text>
+              <Text style={styles.rating}>Sleepy</Text>
+            </View>
+            <View style={styles.right}>
+              <CircleRating disabled={true} rating={log.happy} />
+              <CircleRating disabled={true} rating={log.creative} />
+              <CircleRating disabled={true} rating={log.active} />
+              <CircleRating disabled={true} rating={log.relaxed} />
+              <CircleRating disabled={true} rating={log.hungry} />
+              <CircleRating disabled={true} rating={log.sleepy} />
+            </View>
           </View>
-          <View style={styles.right}>
-            <CircleRating disabled={true} rating={log.happy} />
-            <CircleRating disabled={true} rating={log.creative} />
-            <CircleRating disabled={true} rating={log.active} />
-            <CircleRating disabled={true} rating={log.relaxed} />
-            <CircleRating disabled={true} rating={log.hungry} />
-            <CircleRating disabled={true} rating={log.sleepy} />
+        )}
+        {this.state.ratingsType === 'medical' && (
+          <View style={styles.ratingsContainer}>
+            <View style={styles.left}>
+              <Text style={styles.rating}>Anxiety</Text>
+              <Text style={styles.rating}>Migraines</Text>
+              <Text style={styles.rating}>Cramps</Text>
+              <Text style={styles.rating}>Depression</Text>
+              <Text style={styles.rating}>Pain</Text>
+              <Text style={styles.rating}>Insomnia</Text>
+            </View>
+            <View style={styles.right}>
+              <CircleRating disabled={true} rating={log.anxiety} />
+              <CircleRating disabled={true} rating={log.migraines} />
+              <CircleRating disabled={true} rating={log.cramps} />
+              <CircleRating disabled={true} rating={log.depression} />
+              <CircleRating disabled={true} rating={log.pain} />
+              <CircleRating disabled={true} rating={log.insomnia} />
+            </View>
           </View>
-        </View>
+        )}
         {log.tags && <View style={styles.line} />}
         {log.tags && (
           <Text style={[styles.label, { paddingLeft: 16, marginTop: 16 }]}>GOOD FOR</Text>
@@ -116,11 +154,14 @@ const styles = StyleSheet.create({
     paddingBottom: 24,
     width: '80%'
   },
-  moodChartContainer: {
+  ratingsTypeContainer: {
     marginTop: 16,
+    marginLeft: 16,
+    marginRight: 16,
     display: 'flex',
     flexDirection: 'row',
-    paddingRight: 16
+    borderWidth: 1,
+    borderRadius: 8
   },
   left: {
     width: '50%'
@@ -128,9 +169,10 @@ const styles = StyleSheet.create({
   right: {
     width: '50%'
   },
-  moodChartRight: {
+  half: {
     width: '50%',
-    alignItems: 'center'
+    alignItems: 'center',
+    padding: 8
   },
   ratingsContainer: {
     display: 'flex',
