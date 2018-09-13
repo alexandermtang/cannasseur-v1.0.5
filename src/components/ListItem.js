@@ -15,7 +15,7 @@ const ListItem = ({ item, onPress, onPressDelete }) => {
     }
   ];
   return (
-    <Swipeout right={swipeoutBtns}>
+    <Swipeout autoClose right={swipeoutBtns}>
       <TouchableOpacity style={styles.container} onPress={onPress}>
         <Text style={styles.text}>{`${date}\t${item.strain}`}</Text>
       </TouchableOpacity>

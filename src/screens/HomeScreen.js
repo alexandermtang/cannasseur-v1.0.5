@@ -161,7 +161,6 @@ class HomeScreen extends React.Component {
     const strainsSet = new Set();
     this.state.allLogs.forEach(log => strainsSet.add(log.strain));
     const numStrains = strainsSet.size;
-    console.log('logs', this.state.allLogs);
 
     return (
       <View style={styles.container}>
@@ -208,9 +207,7 @@ class HomeScreen extends React.Component {
                     this.props.navigation.push('ViewLog', { log: item });
                   }}
                   onPressDelete={async () => {
-                    this.setState({ isLoading: true });
                     const userId = await AsyncStorage.getItem('userId');
-                    console.log('delete!', userId, item);
                     await firebase
                       .database()
                       .ref(`logs/${userId}/${item.date}`)

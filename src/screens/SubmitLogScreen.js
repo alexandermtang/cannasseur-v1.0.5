@@ -58,7 +58,6 @@ class SubmitLogScreen extends React.Component {
   }
 
   render() {
-    console.log('submit log', this.props.navigation.state);
     return (
       <View style={styles.container}>
         <Text style={[styles.label, this.state.hasError ? styles.error : null]}>
