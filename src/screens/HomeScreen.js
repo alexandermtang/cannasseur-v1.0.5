@@ -52,18 +52,25 @@ class HomeScreen extends React.Component {
         .once('value');
 
       const logs = snapshot.val();
-      const allLogs = Object.keys(logs)
-        .reverse()
-        .map(date => ({ date, ...logs[date] }));
+      if (logs) {
+        const allLogs = Object.keys(logs)
+          .reverse()
+          .map(date => ({ date, ...logs[date] }));
 
-      this.setState({
-        allLogs,
-        filteredLogs: allLogs,
-        isLoading: false
-      });
+        this.setState({
+          allLogs,
+          filteredLogs: allLogs,
+          isLoading: false
+        });
+      } else {
+        this.setState({
+          allLogs: [],
+          filteredLogs: [],
+          isLoading: false
+        });
+      }
     } catch (error) {
-      // console.error(error);
-      this.setState({ isLoading: false });
+      console.error(error);
     }
   }
 
@@ -154,6 +161,7 @@ class HomeScreen extends React.Component {
     const strainsSet = new Set();
     this.state.allLogs.forEach(log => strainsSet.add(log.strain));
     const numStrains = strainsSet.size;
+    console.log('logs', this.state.allLogs);
 
     return (
       <View style={styles.container}>
@@ -198,6 +206,16 @@ class HomeScreen extends React.Component {
                   item={item}
                   onPress={() => {
                     this.props.navigation.push('ViewLog', { log: item });
+                  }}
+                  onPressDelete={async () => {
+                    this.setState({ isLoading: true });
+                    const userId = await AsyncStorage.getItem('userId');
+                    console.log('delete!', userId, item);
+                    await firebase
+                      .database()
+                      .ref(`logs/${userId}/${item.date}`)
+                      .remove();
+                    await this.getLogs();
                   }}
                 />
               )}

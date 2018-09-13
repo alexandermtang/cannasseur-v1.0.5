@@ -146,7 +146,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 88
+    marginTop: 96
   }
 });
 

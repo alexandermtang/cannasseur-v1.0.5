@@ -23,6 +23,9 @@
       "supportsTablet": false,
       "bundleIdentifier": "com.alexandermtang.cannasseur"
     },
+    "android": {
+      "package": "com.alexandermtang.cannasseur"
+    },
     "hooks": {
       "postPublish": [
         {
