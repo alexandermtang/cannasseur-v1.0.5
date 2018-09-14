@@ -85,12 +85,19 @@ class CreateNewLogScreen extends React.Component {
         </View>
         <View style={styles.ratingsTypeContainer}>
           <TouchableOpacity
-            style={[styles.half, { borderRightWidth: 1 }]}
+            style={styles.half}
             onPress={() => {
               this.setState({ ratingsType: 'mood' });
             }}
           >
-            <Text style={styles.label}>MOOD</Text>
+            <Text
+              style={[
+                styles.label,
+                { color: this.state.ratingsType === 'mood' ? '#000' : '#9B9B9B' }
+              ]}
+            >
+              MOOD
+            </Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.half}
@@ -98,7 +105,14 @@ class CreateNewLogScreen extends React.Component {
               this.setState({ ratingsType: 'medical' });
             }}
           >
-            <Text style={styles.label}>MEDICAL</Text>
+            <Text
+              style={[
+                styles.label,
+                { color: this.state.ratingsType === 'medical' ? '#000' : '#9B9B9B' }
+              ]}
+            >
+              MEDICAL
+            </Text>
           </TouchableOpacity>
         </View>
         {this.state.ratingsType === 'mood' && (
@@ -242,17 +256,13 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     marginTop: 16,
-    marginBottom: 8,
-    borderWidth: 1,
-    // padding: 8,
-    borderRadius: 8
+    marginBottom: 8
   },
   label: {
     fontSize: 16,
     fontFamily: 'WorkSans'
   },
   half: {
-    width: '50%',
     alignItems: 'center',
     padding: 8
   },

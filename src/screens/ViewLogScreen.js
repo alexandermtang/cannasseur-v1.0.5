@@ -43,12 +43,19 @@ class ViewLogScreen extends React.Component {
         <View style={styles.line} />
         <View style={styles.ratingsTypeContainer}>
           <TouchableOpacity
-            style={[styles.half, { borderRightWidth: 1 }]}
+            style={styles.half}
             onPress={() => {
               this.setState({ ratingsType: 'mood' });
             }}
           >
-            <Text style={styles.label}>MOOD</Text>
+            <Text
+              style={[
+                styles.label,
+                { color: this.state.ratingsType === 'mood' ? '#000' : '#9B9B9B' }
+              ]}
+            >
+              MOOD
+            </Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.half}
@@ -56,7 +63,14 @@ class ViewLogScreen extends React.Component {
               this.setState({ ratingsType: 'medical' });
             }}
           >
-            <Text style={styles.label}>MEDICAL</Text>
+            <Text
+              style={[
+                styles.label,
+                { color: this.state.ratingsType === 'medical' ? '#000' : '#9B9B9B' }
+              ]}
+            >
+              MEDICAL
+            </Text>
           </TouchableOpacity>
         </View>
         {this.state.ratingsType === 'mood' && (
@@ -159,9 +173,7 @@ const styles = StyleSheet.create({
     marginLeft: 16,
     marginRight: 16,
     display: 'flex',
-    flexDirection: 'row',
-    borderWidth: 1,
-    borderRadius: 8
+    flexDirection: 'row'
   },
   left: {
     width: '50%'
@@ -170,9 +182,8 @@ const styles = StyleSheet.create({
     width: '50%'
   },
   half: {
-    width: '50%',
     alignItems: 'center',
-    padding: 8
+    padding: 16
   },
   ratingsContainer: {
     display: 'flex',
