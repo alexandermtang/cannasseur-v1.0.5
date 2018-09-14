@@ -41,6 +41,11 @@ class ViewLogScreen extends React.Component {
           />
         </View>
         <View style={styles.line} />
+        <View style={styles.typeContainer}>
+          <Text style={styles.typeText}>TYPE</Text>
+          <Text style={styles.type}>{log.type}</Text>
+        </View>
+        <View style={styles.line} />
         <View style={styles.ratingsTypeContainer}>
           <TouchableOpacity
             style={styles.half}
@@ -183,7 +188,27 @@ const styles = StyleSheet.create({
   },
   half: {
     alignItems: 'center',
-    padding: 16
+    paddingTop: 8,
+    paddingBottom: 8,
+    paddingRight: 8,
+    marginRight: 16
+  },
+  typeContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 16,
+    marginBottom: 16
+  },
+  typeText: {
+    fontSize: 16,
+    fontFamily: 'WorkSans',
+    marginLeft: 16,
+    marginRight: 32
+  },
+  type: {
+    fontSize: 24,
+    fontFamily: 'PlayfairDisplay-Regular'
   },
   ratingsContainer: {
     display: 'flex',

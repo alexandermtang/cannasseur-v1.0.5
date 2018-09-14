@@ -20,6 +20,8 @@ class LogNewSessionScreen extends React.Component {
 
   state = {
     strain: '',
+    type: 'Flower', // or 'Concentrate'
+
     happy: 0,
     creative: 0,
     active: 0,
@@ -83,6 +85,27 @@ class LogNewSessionScreen extends React.Component {
             value={this.state.strain}
           />
         </View>
+        <View style={styles.typeContainer}>
+          <Text style={styles.typeText}>TYPE</Text>
+          <TouchableOpacity onPress={() => this.setState({ type: 'Flower' })}>
+            <Text
+              style={[styles.type, { color: this.state.type === 'Flower' ? '#000' : '#9B9B9B' }]}
+            >
+              Flower
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => this.setState({ type: 'Concentrate' })}>
+            <Text
+              style={[
+                styles.type,
+                { color: this.state.type === 'Concentrate' ? '#000' : '#9B9B9B' }
+              ]}
+            >
+              Concentrate
+            </Text>
+          </TouchableOpacity>
+        </View>
+
         <View style={styles.ratingsTypeContainer}>
           <TouchableOpacity
             style={styles.half}
@@ -252,6 +275,21 @@ const styles = StyleSheet.create({
     borderColor: '#9B9B9B',
     borderBottomWidth: 1
   },
+  typeContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginTop: 16
+  },
+  typeText: {
+    fontFamily: 'WorkSans',
+    fontSize: 16,
+  },
+  type: {
+    fontFamily: 'PlayfairDisplay-Regular',
+    fontSize: 24
+  },
   ratingsTypeContainer: {
     display: 'flex',
     flexDirection: 'row',
@@ -264,7 +302,10 @@ const styles = StyleSheet.create({
   },
   half: {
     alignItems: 'center',
-    padding: 8
+    paddingTop: 8,
+    paddingBottom: 8,
+    paddingRight: 8,
+    marginRight: 16
   },
   ratingsContainer: {
     display: 'flex',

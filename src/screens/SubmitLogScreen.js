@@ -43,6 +43,8 @@ class SubmitLogScreen extends React.Component {
         .ref(`logs/${userId}/${date}`)
         .set({
           strain: log.strain,
+          type: log.type,
+
           happy: log.happy,
           creative: log.creative,
           active: log.active,
