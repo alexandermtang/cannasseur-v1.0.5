@@ -6,7 +6,7 @@ import { Ionicons } from '@expo/vector-icons';
 import CircleRating from '../components/CircleRating';
 import BlackButton from '../components/BlackButton';
 
-class CreateNewLogScreen extends React.Component {
+class LogNewSessionScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return {
       title: moment().format('MM/DD'),
@@ -334,4 +334,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default CreateNewLogScreen;
+export default LogNewSessionScreen;

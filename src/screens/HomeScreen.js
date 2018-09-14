@@ -221,8 +221,8 @@ class HomeScreen extends React.Component {
         )}
         <View style={styles.footerContainer}>
           <BlackButton
-            onPress={() => this.props.navigation.navigate('CreateNewLog')}
-            text={'CREATE NEW LOG'}
+            onPress={() => this.props.navigation.navigate('LogNewSession')}
+            text={'LOG NEW SESSION'}
           />
           <View style={styles.strainsContainer}>
             <Text style={styles.numStrains}>{numStrains}</Text>

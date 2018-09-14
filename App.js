@@ -14,7 +14,7 @@ import ForgotPasswordScreen from './src/screens/Auth/ForgotPasswordScreen';
 
 import HomeScreen from './src/screens/HomeScreen';
 import MeScreen from './src/screens/MeScreen';
-import CreateNewLogScreen from './src/screens/CreateNewLogScreen';
+import LogNewSessionScreen from './src/screens/LogNewSessionScreen';
 import SubmitLogScreen from './src/screens/SubmitLogScreen';
 import ViewLogScreen from './src/screens/ViewLogScreen';
 
@@ -52,7 +52,7 @@ const AppStack = createStackNavigator(
   {
     Home: HomeScreen,
     Me: MeScreen,
-    CreateNewLog: CreateNewLogScreen,
+    LogNewSession: LogNewSessionScreen,
     SubmitLog: SubmitLogScreen,
     ViewLog: ViewLogScreen
   },

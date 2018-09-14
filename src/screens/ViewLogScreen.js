@@ -130,7 +130,7 @@ class ViewLogScreen extends React.Component {
         {log.notes && <Text style={styles.notes}>"{log.notes}"</Text>}
         <TouchableOpacity
           style={[styles.button, styles.editButton]}
-          onPress={() => this.props.navigation.push('CreateNewLog', { log })}
+          onPress={() => this.props.navigation.push('LogNewSession', { log })}
         >
           <Text style={[styles.buttonText, { color: '#fff' }]}>EDIT</Text>
         </TouchableOpacity>
