@@ -278,17 +278,18 @@ const styles = StyleSheet.create({
   typeContainer: {
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
     marginTop: 16
   },
   typeText: {
     fontFamily: 'WorkSans',
     fontSize: 16,
+    marginRight: 48
   },
   type: {
     fontFamily: 'PlayfairDisplay-Regular',
-    fontSize: 24
+    fontSize: 24,
+    marginRight: 41
   },
   ratingsTypeContainer: {
     display: 'flex',
