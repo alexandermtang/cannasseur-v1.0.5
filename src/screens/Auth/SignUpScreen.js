@@ -99,7 +99,7 @@ class SignUpScreen extends React.Component {
           <TouchableOpacity
             onPress={() => this.setState({ isOver18: !this.state.isOver18, error: '' })}
           >
-            <Text style={{ fontFamily: 'WorkSans', fontSize: 16 }}>I am over the age of 18.</Text>
+            <Text style={{ fontFamily: 'WorkSans', fontSize: 16 }}>I am over the age of 21.</Text>
           </TouchableOpacity>
         </View>
         <Text style={styles.error}>{this.state.error}</Text>}
