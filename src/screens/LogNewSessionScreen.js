@@ -214,7 +214,7 @@ class LogNewSessionScreen extends React.Component {
             </View>
           </View>
         )}
-        <Text style={styles.label}>GOOD FOR</Text>
+        <Text style={styles.label}>TAGS</Text>
         <View style={styles.tagsContainer}>
           {this.state.tagOptions.map((tag, i) => {
             return (

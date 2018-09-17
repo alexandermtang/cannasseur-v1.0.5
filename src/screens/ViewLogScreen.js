@@ -120,7 +120,7 @@ class ViewLogScreen extends React.Component {
         )}
         {log.tags && <View style={styles.line} />}
         {log.tags && (
-          <Text style={[styles.label, { paddingLeft: 16, marginTop: 16 }]}>GOOD FOR</Text>
+          <Text style={[styles.label, { paddingLeft: 16, marginTop: 16 }]}>TAGS</Text>
         )}
         <View style={styles.tagsContainer}>
           {(log.tags || []).map((tag, i) => {
