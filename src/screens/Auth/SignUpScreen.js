@@ -1,5 +1,7 @@
 import React from 'react';
 import { AsyncStorage, Text, View, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
+import CheckBox from 'react-native-check-box';
+import { Ionicons } from '@expo/vector-icons';
 import * as firebase from 'firebase';
 import Spinner from 'react-native-loading-spinner-overlay';
 
@@ -9,12 +11,14 @@ class SignUpScreen extends React.Component {
     email: '',
     password: '',
     confirmPassword: '',
+    isOver18: false,
+
     error: '',
     isLoading: false
   };
 
   async onSignUp() {
-    const { name, email, password, confirmPassword } = this.state;
+    const { name, email, password, confirmPassword, isOver18 } = this.state;
     if (name === '') {
       return this.setState({ error: 'Missing name.', isLoading: false });
     }
@@ -25,6 +29,10 @@ class SignUpScreen extends React.Component {
 
     if (password !== confirmPassword) {
       return this.setState({ error: 'Passwords must match.', isLoading: false });
+    }
+
+    if (!isOver18) {
+      return this.setState({ error: 'Please verify your age.', isLoading: false });
     }
 
     try {
@@ -77,9 +85,23 @@ class SignUpScreen extends React.Component {
         <TextInput
           style={styles.input}
           placeholder={'confirm password'}
-          onChangeText={confirmPassword => this.setState({ confirmPassword, hasError: false })}
+          onChangeText={confirmPassword => this.setState({ confirmPassword, error: '' })}
           secureTextEntry
         />
+        <View style={styles.isOver18Container}>
+          <CheckBox
+            onClick={() => this.setState({ isOver18: !this.state.isOver18, error: '' })}
+            isChecked={this.state.isOver18}
+            checkedImage={<Ionicons name={'ios-checkbox'} size={32} />}
+            unCheckedImage={<Ionicons name={'ios-square-outline'} size={32} />}
+            style={{ marginRight: 16 }}
+          />
+          <TouchableOpacity
+            onPress={() => this.setState({ isOver18: !this.state.isOver18, error: '' })}
+          >
+            <Text style={{ fontFamily: 'WorkSans', fontSize: 16 }}>I am over the age of 18.</Text>
+          </TouchableOpacity>
+        </View>
         <Text style={styles.error}>{this.state.error}</Text>}
         <TouchableOpacity
           style={[styles.button, styles.signUpButton]}
@@ -91,7 +113,7 @@ class SignUpScreen extends React.Component {
           <Text style={[styles.buttonText, { color: '#fff' }]}>CREATE ACCOUNT</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={[styles.button, { marginTop: 128 }]}
+          style={[styles.button, { marginTop: 80 }]}
           onPress={() => this.props.navigation.goBack()}
         >
           <Text style={[styles.buttonText, { color: '#000' }]}>GO BACK</Text>
@@ -137,6 +159,13 @@ const styles = StyleSheet.create({
     color: '#f00',
     height: 24,
     marginTop: 8
+  },
+  isOver18Container: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: '80%',
+    marginTop: 16
   }
 });
 
