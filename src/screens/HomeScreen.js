@@ -134,9 +134,12 @@ class HomeScreen extends React.Component {
     } else if (type === 'topRated') {
       tempLogs.sort((a, b) => b.finalRating - a.finalRating);
       filterText = 'TOP RATED';
-    } else {
+    } else if (['happy', 'creative', 'active', 'relaxed', 'sleepy'].includes(type)) {
       tempLogs.sort((a, b) => b[type] - a[type]);
       filterText = `MOOD: ${type.toUpperCase()}`;
+    } else if (['anxiety', 'migraines', 'depression', 'pain', 'insomnia'].includes(type)) {
+      tempLogs.sort((a, b) => b[type] - a[type]);
+      filterText = `MEDICAL: ${type.toUpperCase()}`;
     }
 
     this.setState({ filterText });
@@ -255,8 +258,18 @@ class HomeScreen extends React.Component {
                 <FilterButton onPress={() => this.sortBy('active')} text={'MOOD: ACTIVE'} />
                 <FilterButton onPress={() => this.sortBy('relaxed')} text={'MOOD: RELAXED'} />
                 <FilterButton onPress={() => this.sortBy('sleepy')} text={'MOOD: SLEEPY'} />
+                <FilterButton onPress={() => this.sortBy('anxiety')} text={'MEDICAL: ANXIETY'} />
+                <FilterButton
+                  onPress={() => this.sortBy('migraines')}
+                  text={'MEDICAL: MIGRAINES'}
+                />
+                <FilterButton
+                  onPress={() => this.sortBy('depression')}
+                  text={'MEDICAL: DEPRESSION'}
+                />
+                <FilterButton onPress={() => this.sortBy('pain')} text={'MEDICAL: PAIN'} />
+                <FilterButton onPress={() => this.sortBy('insomnia')} text={'MEDICAL: INSOMNIA'} />
               </ScrollView>
-              <View />
             </Animated.View>
           </View>
         )}
