@@ -85,7 +85,6 @@ class ViewLogScreen extends React.Component {
               <Text style={styles.rating}>Creative</Text>
               <Text style={styles.rating}>Active</Text>
               <Text style={styles.rating}>Relaxed</Text>
-              <Text style={styles.rating}>Hungry</Text>
               <Text style={styles.rating}>Sleepy</Text>
             </View>
             <View style={styles.right}>
@@ -93,7 +92,6 @@ class ViewLogScreen extends React.Component {
               <CircleRating disabled={true} rating={log.creative} />
               <CircleRating disabled={true} rating={log.active} />
               <CircleRating disabled={true} rating={log.relaxed} />
-              <CircleRating disabled={true} rating={log.hungry} />
               <CircleRating disabled={true} rating={log.sleepy} />
             </View>
           </View>
@@ -103,7 +101,6 @@ class ViewLogScreen extends React.Component {
             <View style={styles.left}>
               <Text style={styles.rating}>Anxiety</Text>
               <Text style={styles.rating}>Migraines</Text>
-              <Text style={styles.rating}>Cramps</Text>
               <Text style={styles.rating}>Depression</Text>
               <Text style={styles.rating}>Pain</Text>
               <Text style={styles.rating}>Insomnia</Text>
@@ -111,7 +108,6 @@ class ViewLogScreen extends React.Component {
             <View style={styles.right}>
               <CircleRating disabled={true} rating={log.anxiety} />
               <CircleRating disabled={true} rating={log.migraines} />
-              <CircleRating disabled={true} rating={log.cramps} />
               <CircleRating disabled={true} rating={log.depression} />
               <CircleRating disabled={true} rating={log.pain} />
               <CircleRating disabled={true} rating={log.insomnia} />

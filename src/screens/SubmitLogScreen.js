@@ -49,12 +49,10 @@ class SubmitLogScreen extends React.Component {
           creative: log.creative,
           active: log.active,
           relaxed: log.relaxed,
-          hungry: log.hungry,
           sleepy: log.sleepy,
         
           anxiety: log.anxiety,
           migraines: log.migraines,
-          cramps: log.cramps,
           depression: log.depression,
           pain: log.pain,
           insomnia: log.insomnia,

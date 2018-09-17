@@ -254,7 +254,6 @@ class HomeScreen extends React.Component {
                 <FilterButton onPress={() => this.sortBy('creative')} text={'MOOD: CREATIVE'} />
                 <FilterButton onPress={() => this.sortBy('active')} text={'MOOD: ACTIVE'} />
                 <FilterButton onPress={() => this.sortBy('relaxed')} text={'MOOD: RELAXED'} />
-                <FilterButton onPress={() => this.sortBy('hungry')} text={'MOOD: HUNGRY'} />
                 <FilterButton onPress={() => this.sortBy('sleepy')} text={'MOOD: SLEEPY'} />
               </ScrollView>
               <View />

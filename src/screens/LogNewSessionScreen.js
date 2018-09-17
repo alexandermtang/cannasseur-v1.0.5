@@ -26,12 +26,10 @@ class LogNewSessionScreen extends React.Component {
     creative: 0,
     active: 0,
     relaxed: 0,
-    hungry: 0,
     sleepy: 0,
 
     anxiety: 0,
     migraines: 0,
-    cramps: 0,
     depression: 0,
     pain: 0,
     insomnia: 0,
@@ -145,7 +143,6 @@ class LogNewSessionScreen extends React.Component {
               <Text style={styles.rating}>Creative</Text>
               <Text style={styles.rating}>Active</Text>
               <Text style={styles.rating}>Relaxed</Text>
-              <Text style={styles.rating}>Hungry</Text>
               <Text style={styles.rating}>Sleepy</Text>
             </View>
             <View style={styles.right}>
@@ -166,10 +163,6 @@ class LogNewSessionScreen extends React.Component {
                 selectedStar={rating => this.setState({ relaxed: rating })}
               />
               <CircleRating
-                rating={this.state.hungry}
-                selectedStar={rating => this.setState({ hungry: rating })}
-              />
-              <CircleRating
                 rating={this.state.sleepy}
                 selectedStar={rating => this.setState({ sleepy: rating })}
               />
@@ -181,7 +174,6 @@ class LogNewSessionScreen extends React.Component {
             <View style={styles.left}>
               <Text style={styles.rating}>Anxiety</Text>
               <Text style={styles.rating}>Migraines</Text>
-              <Text style={styles.rating}>Cramps</Text>
               <Text style={styles.rating}>Depression</Text>
               <Text style={styles.rating}>Pain</Text>
               <Text style={styles.rating}>Insomnia</Text>
@@ -194,10 +186,6 @@ class LogNewSessionScreen extends React.Component {
               <CircleRating
                 rating={this.state.migraines}
                 selectedStar={rating => this.setState({ migraines: rating })}
-              />
-              <CircleRating
-                rating={this.state.cramps}
-                selectedStar={rating => this.setState({ cramps: rating })}
               />
               <CircleRating
                 rating={this.state.depression}
