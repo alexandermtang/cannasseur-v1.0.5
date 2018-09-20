@@ -1,8 +1,17 @@
 import React from 'react';
-import { Text, TouchableOpacity, View, TextInput, StyleSheet, ScrollView } from 'react-native';
+import {
+  AsyncStorage,
+  Text,
+  TouchableOpacity,
+  View,
+  TextInput,
+  StyleSheet,
+  ScrollView
+} from 'react-native';
 import moment from 'moment';
 import { Ionicons } from '@expo/vector-icons';
 import Dialog from 'react-native-dialog';
+import * as firebase from 'firebase';
 
 import CircleRating from '../components/CircleRating';
 import BlackButton from '../components/BlackButton';
@@ -36,7 +45,7 @@ class LogNewSessionScreen extends React.Component {
     insomnia: 0,
 
     tags: [],
-    tagOptions: ['Laughing', 'Socializing', 'Yoga', 'Munchies', 'Movies', 'Ideas'],
+    tagOptions: [],
     dialogVisible: false,
     newTag: '',
     hasErrors: false,
@@ -44,10 +53,28 @@ class LogNewSessionScreen extends React.Component {
     ratingsType: 'mood' // or 'medical'
   };
 
-  componentDidMount() {
+  async componentDidMount() {
     const log = this.props.navigation.getParam('log', null);
     if (log) {
       this.setState({ ...log });
+    }
+
+    try {
+      const userId = await AsyncStorage.getItem('userId');
+      const snapshot = await firebase
+        .database()
+        .ref(`users/${userId}/tags`)
+        .once('value');
+      const tagOptions = snapshot.val();
+      if (tagOptions === null) {
+        this.setState({
+          tagOptions: ['Laughing', 'Socializing', 'Yoga', 'Munchies', 'Movies', 'Ideas']
+        });
+      } else {
+        this.setState({ tagOptions });
+      }
+    } catch (error) {
+      console.error(error);
     }
   }
 
@@ -59,6 +86,14 @@ class LogNewSessionScreen extends React.Component {
 
   isComplete() {
     return this.state.strain !== '';
+  }
+
+  async updateTags() {
+    const userId = await AsyncStorage.getItem('userId');
+    await firebase
+      .database()
+      .ref(`users/${userId}`)
+      .update({ tags: this.state.tagOptions });
   }
 
   render() {
@@ -208,9 +243,10 @@ class LogNewSessionScreen extends React.Component {
                     : styles.tagButtonHighlighted
                 ]}
                 onPress={() => this.toggleTag(tag)}
-                onLongPress={() =>
-                  this.setState({ tagOptions: this.state.tagOptions.filter(t => t !== tag) })
-                }
+                onLongPress={() => {
+                  this.setState({ tagOptions: this.state.tagOptions.filter(t => t !== tag) });
+                  this.updateTags();
+                }}
               >
                 <Text
                   style={[
@@ -263,6 +299,7 @@ class LogNewSessionScreen extends React.Component {
                 });
               }
               this.setState({ dialogVisible: false });
+              this.updateTags();
             }}
           />
         </Dialog.Container>
