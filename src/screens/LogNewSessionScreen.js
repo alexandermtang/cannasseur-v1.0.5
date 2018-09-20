@@ -2,6 +2,7 @@ import React from 'react';
 import { Text, TouchableOpacity, View, TextInput, StyleSheet, ScrollView } from 'react-native';
 import moment from 'moment';
 import { Ionicons } from '@expo/vector-icons';
+import Dialog from 'react-native-dialog';
 
 import CircleRating from '../components/CircleRating';
 import BlackButton from '../components/BlackButton';
@@ -35,17 +36,9 @@ class LogNewSessionScreen extends React.Component {
     insomnia: 0,
 
     tags: [],
-    tagOptions: [
-      'Ideas',
-      'Laughing',
-      'Movies',
-      'Socializing',
-      'Sleep',
-      'Sex',
-      'Edibles',
-      'Food',
-      'Anxiety'
-    ],
+    tagOptions: ['Laughing', 'Socializing', 'Yoga', 'Munchies', 'Movies', 'Ideas'],
+    dialogVisible: false,
+    newTag: '',
     hasErrors: false,
 
     ratingsType: 'mood' // or 'medical'
@@ -215,6 +208,9 @@ class LogNewSessionScreen extends React.Component {
                     : styles.tagButtonHighlighted
                 ]}
                 onPress={() => this.toggleTag(tag)}
+                onLongPress={() =>
+                  this.setState({ tagOptions: this.state.tagOptions.filter(t => t !== tag) })
+                }
               >
                 <Text
                   style={[
@@ -229,6 +225,12 @@ class LogNewSessionScreen extends React.Component {
               </TouchableOpacity>
             );
           })}
+          <TouchableOpacity
+            style={[styles.tagButton]}
+            onPress={() => this.setState({ dialogVisible: true })}
+          >
+            <Text style={[styles.tag]}>+ ADD</Text>
+          </TouchableOpacity>
         </View>
         <View style={styles.nextButtonContainer}>
           <BlackButton
@@ -243,6 +245,27 @@ class LogNewSessionScreen extends React.Component {
             }}
           />
         </View>
+        <Dialog.Container visible={this.state.dialogVisible}>
+          <Dialog.Title>Enter a tag</Dialog.Title>
+          <Dialog.Input
+            onChangeText={newTag => this.setState({ newTag })}
+            textInputRef={ref => (this.input = ref)}
+          />
+          <Dialog.Button label="Cancel" onPress={() => this.setState({ dialogVisible: false })} />
+          <Dialog.Button
+            label="OK"
+            onPress={() => {
+              const { tagOptions, newTag } = this.state;
+              if (newTag && !tagOptions.includes(newTag)) {
+                this.setState({
+                  tagOptions: [...tagOptions, newTag],
+                  newTag: ''
+                });
+              }
+              this.setState({ dialogVisible: false });
+            }}
+          />
+        </Dialog.Container>
       </ScrollView>
     );
   }
