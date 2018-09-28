@@ -6,7 +6,7 @@
     "privacy": "public",
     "sdkVersion": "30.0.0",
     "platforms": ["ios"],
-    "version": "1.0.3",
+    "version": "1.0.4",
     "orientation": "portrait",
     "icon": "./assets/cannabis.png",
     "primaryColor": "#F4F3EF",
