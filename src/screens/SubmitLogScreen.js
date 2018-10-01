@@ -4,6 +4,7 @@ import moment from 'moment';
 import { Ionicons } from '@expo/vector-icons';
 import StarRating from 'react-native-star-rating';
 import * as firebase from 'firebase';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 import BlackButton from '../components/BlackButton';
 
@@ -50,7 +51,7 @@ class SubmitLogScreen extends React.Component {
           active: log.active,
           relaxed: log.relaxed,
           sleepy: log.sleepy,
-        
+
           anxiety: log.anxiety,
           migraines: log.migraines,
           depression: log.depression,
@@ -74,7 +75,7 @@ class SubmitLogScreen extends React.Component {
 
   render() {
     return (
-      <View style={styles.container}>
+      <KeyboardAwareScrollView contentContainerStyle={styles.container}>
         <Text style={[styles.label, this.state.hasError ? styles.error : null]}>
           Final Rating
           {this.state.hasError ? '*' : ''}
@@ -102,7 +103,7 @@ class SubmitLogScreen extends React.Component {
         <View style={styles.buttonContainer}>
           <BlackButton onPress={() => this.onSubmit()} text={'SUBMIT'} />
         </View>
-      </View>
+      </KeyboardAwareScrollView>
     );
   }
 }
